@@ -1,4 +1,4 @@
-package com.embriodigital.pniuser.utils.myimagepicker
+package com.yadev.mylibrary.myimagepicker
 
 import android.Manifest
 import android.app.Activity
@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
-import com.embriodigital.pniuser.R
+import com.yadev.mylibrary.R
 import java.io.File
 
 class CameraProvider(activity: ImagePickerActivity) : BaseProvider(activity) {
@@ -44,8 +44,8 @@ class CameraProvider(activity: ImagePickerActivity) : BaseProvider(activity) {
     /**
      * True If Camera Permission Defined in AndroidManifest.xml
      */
-    private val mAskCameraPermission = PermissionUtil
-        .isPermissionInManifest(this, Manifest.permission.CAMERA)
+    private val mAskCameraPermission =
+        PermissionUtil.isPermissionInManifest(this, Manifest.permission.CAMERA)
 
     /**
      * Camera image will be stored in below file directory

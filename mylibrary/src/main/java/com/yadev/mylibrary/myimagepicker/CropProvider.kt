@@ -1,4 +1,4 @@
-package com.embriodigital.pniuser.utils.myimagepicker
+package com.yadev.mylibrary.myimagepicker
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import com.embriodigital.pniuser.R
+import com.yadev.mylibrary.R
 import com.yalantis.ucrop.UCrop
 import java.io.File
 import java.io.IOException

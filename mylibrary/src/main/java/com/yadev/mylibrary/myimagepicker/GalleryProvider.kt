@@ -1,10 +1,10 @@
-package com.embriodigital.pniuser.utils.myimagepicker
+package com.yadev.mylibrary.myimagepicker
 
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import androidx.core.app.ActivityCompat
-import com.embriodigital.pniuser.R
+import com.yadev.mylibrary.R
 import java.io.File
 
 class GalleryProvider(activity: ImagePickerActivity) :

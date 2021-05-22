@@ -1,10 +1,10 @@
-package com.embriodigital.pniuser.utils.myimagepicker
+package com.yadev.mylibrary.myimagepicker
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
-import com.embriodigital.pniuser.R
+import com.yadev.mylibrary.R
 import java.io.File
 
 class CompressionProvider(activity: ImagePickerActivity) : BaseProvider(activity) {

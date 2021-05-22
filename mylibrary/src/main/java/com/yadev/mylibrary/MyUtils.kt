@@ -24,7 +24,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.embriodigital.pniuser.utils.myimagepicker.ImagePicker
+import com.yadev.mylibrary.myimagepicker.ImagePicker
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*

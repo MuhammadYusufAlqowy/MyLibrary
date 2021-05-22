@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="r16">@dimen/_16adp</dimen>
+    <dimen name="m8">@dimen/_8adp</dimen>
+    <dimen name="m16">@dimen/_16adp</dimen>
+    <dimen name="m20">@dimen/_20adp</dimen>
+    <dimen name="m24">@dimen/_24adp</dimen>
+    <dimen name="r25">@dimen/_25adp</dimen>
+    <dimen name="m4">@dimen/_4adp</dimen>
+    <dimen name="t11">@dimen/_11asp</dimen>
+    <dimen name="t10">@dimen/_10asp</dimen>
+    <dimen name="t12">@dimen/_12asp</dimen>
+    <dimen name="t14">@dimen/_14asp</dimen>
+    <dimen name="m32">@dimen/_32adp</dimen>
+    <dimen name="card_elevation">@dimen/_1adp</dimen>
+    <dimen name="t16">@dimen/_16asp</dimen>
+    <dimen name="r8">@dimen/_8adp</dimen>
+    <dimen name="m10">@dimen/_10adp</dimen>
+    <dimen name="t21">@dimen/_21asp</dimen>
+    <dimen name="m12">@dimen/_12adp</dimen>
+    <dimen name="t9">@dimen/_9asp</dimen>
+    <dimen name="m6">@dimen/_6adp</dimen>
+    <dimen name="m50">@dimen/_50adp</dimen>
+    <dimen name="m30">@dimen/_30adp</dimen>
+    <dimen name="m2">@dimen/_2adp</dimen>
+    <dimen name="t20">@dimen/_20asp</dimen>
+    <dimen name="t8">@dimen/_8asp</dimen>
+    <dimen name="t18">@dimen/_18asp</dimen>
+</resources>

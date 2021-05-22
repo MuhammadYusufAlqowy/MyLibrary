@@ -1,4 +1,4 @@
-package com.embriodigital.pniuser.utils.myimagepicker
+package com.yadev.mylibrary.myimagepicker
 
 import android.app.Activity
 import android.content.Context
@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.embriodigital.pniuser.R
-import com.embriodigital.pniuser.utils.myimagepicker.ImagePickerActivity.Companion.getCancelledIntent
+import com.yadev.mylibrary.myimagepicker.ImagePickerActivity.Companion.getCancelledIntent
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.bottom_sheet_image_picker.*
-import kotlinx.android.synthetic.main.bottom_sheet_image_picker.view.*
+import com.yadev.mylibrary.R
 import java.io.File
 
 internal interface ResultListener<T> {
@@ -29,6 +27,7 @@ internal object DialogHelper {
     fun showChooseAppDialog(context: Context, listener: ResultListener<ImageProvider>) {
         val bottomSheet = BottomSheetDialog(context)
         bottomSheet.setContentView(R.layout.bottom_sheet_image_picker)
+
         bottomSheet.setOnCancelListener {
             listener.onResult(null)
         }
@@ -52,7 +51,7 @@ internal object DialogHelper {
             .show()*/
 
         // Handle Camera option click
-        bottomSheet.lytCameraPick.setOnClickListener {
+        /*bottomSheet.lytCameraPick.setOnClickListener {
             listener.onResult(ImageProvider.CAMERA)
             bottomSheet.dismiss()
         }
@@ -61,7 +60,7 @@ internal object DialogHelper {
         bottomSheet.lytGalleryPick.setOnClickListener {
             listener.onResult(ImageProvider.GALLERY)
             bottomSheet.dismiss()
-        }
+        }*/
     }
 }
 

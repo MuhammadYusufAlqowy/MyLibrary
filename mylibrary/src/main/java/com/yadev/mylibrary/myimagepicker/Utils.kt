@@ -1,4 +1,4 @@
-package com.embriodigital.pniuser.utils.myimagepicker
+package com.yadev.mylibrary.myimagepicker
 
 import android.content.ContentUris
 import android.content.Context
@@ -15,7 +15,7 @@ import android.provider.MediaStore
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
-import com.embriodigital.pniuser.R
+import com.yadev.mylibrary.R
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*

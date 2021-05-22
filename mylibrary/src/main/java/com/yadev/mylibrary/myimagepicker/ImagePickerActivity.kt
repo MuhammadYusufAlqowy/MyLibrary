@@ -1,4 +1,4 @@
-package com.embriodigital.pniuser.utils.myimagepicker
+package com.yadev.mylibrary.myimagepicker
 
 import android.app.Activity
 import android.content.Context
@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.embriodigital.pniuser.R
+import com.yadev.mylibrary.R
 import java.io.File
 
 class ImagePickerActivity : AppCompatActivity() {
