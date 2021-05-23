@@ -2,6 +2,7 @@
 <resources>
     <dimen name="m8">8dp</dimen>
     <dimen name="m16">16dp</dimen>
+    <dimen name="m10">10dp</dimen>
     <dimen name="r16">16dp</dimen>
     <dimen name="r8">16dp</dimen>
     <dimen name="t12">12sp</dimen>
