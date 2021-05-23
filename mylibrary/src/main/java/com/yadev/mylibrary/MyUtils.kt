@@ -7,22 +7,32 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Animatable
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.getDrawableOrThrow
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
 import com.yadev.mylibrary.myimagepicker.ImagePicker
 import com.google.android.gms.common.api.ApiException
@@ -42,9 +52,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import com.yadev.mylibrary.activity.WebViewActivity
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.Exception
+import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun Context.savePreferences(namePreferences: String, value: Any): Boolean {
@@ -264,7 +278,7 @@ fun pickImage(activity: Activity, imageView: ImageView) {
             }
 
             override fun onPermissionRationaleShouldBeShown(
-                p0: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
+                p0: MutableList<PermissionRequest>?,
                 p1: PermissionToken?
             ) {
                 p1?.continuePermissionRequest()
@@ -471,7 +485,7 @@ fun Context.getStatusBarHeight(): Int {
  * Menambahkan format rupiah di TextInputLayout
  * Mengambil nilai dari format rupiah TextInputLayout
  */
-fun TextInputLayout.addFormatRupiah(){
+fun TextInputLayout.addFormatRupiah() {
     this.editText?.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         }
@@ -496,4 +510,129 @@ fun TextInputLayout.addFormatRupiah(){
         }
     })
 }
+
 fun TextInputLayout.getValueFormatRupiah() = this.editText?.text.toString().replace(".", "")
+
+fun Context.openWebview(
+    url: String,
+    title: String? = getString(R.string.app_name),
+    @DrawableRes icon: Int? = R.drawable.ic_baseline_arrow_back_24,
+    @ColorRes backGroundColor: Int? = R.color.white,
+    @ColorRes titleColor: Int? = R.color.primary
+) {
+    val intent = Intent(this, WebViewActivity::class.java)
+    intent.putExtra("title", title)
+    intent.putExtra("url", url)
+    intent.putExtra("icon", icon)
+    intent.putExtra("backgroundColor", backGroundColor)
+    intent.putExtra("titleColor", titleColor)
+    startActivity(intent)
+}
+
+fun readableFileSize(size: Long): String? {
+    if (size <= 0) return "0 Bytes"
+    val units = arrayOf("Bytes", "kB", "MB", "GB", "TB")
+    val digitGroups = (Math.log10(size.toDouble()) / Math.log10(1024.0)).toInt()
+    return DecimalFormat("#,##0.#").format(size / Math.pow(1024.0, digitGroups.toDouble()))
+        .toString() + " " + units[digitGroups]
+}
+
+fun Context.getCacheSize(): Long {
+    var size: Long = 0
+    size += getDirSize(cacheDir!!)
+    size += getDirSize(externalCacheDir!!)
+    return size
+}
+
+fun getDirSize(dir: File): Long {
+    var size: Long = 0
+    for (file in dir.listFiles()) {
+        if (file != null && file.isDirectory()) {
+            size += getDirSize(file)
+        } else if (file != null && file.isFile()) {
+            size += file.length()
+        }
+    }
+    return size
+}
+
+fun ImageViewToByteArray(imageView: ImageView): ByteArray {
+    val bitmap = imageView.drawable.toBitmap()
+    val stream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+    return stream.toByteArray()
+}
+
+@SuppressLint("UseCompatLoadingForColorStateLists")
+fun TextInputLayout.setLoadingTil(show: Boolean) {
+    if (show) {
+        this.context.applicationContext.apply {
+            val value = TypedValue()
+            theme.resolveAttribute(android.R.attr.progressBarStyleSmall, value, false)
+            val progressBarStyle = value.data
+            val attributes = intArrayOf(android.R.attr.indeterminateDrawable)
+            val array = obtainStyledAttributes(progressBarStyle, attributes)
+            val drawable = array.getDrawableOrThrow(0)
+            array.recycle()
+
+            isStartIconVisible = true
+            startIconDrawable = drawable
+            setStartIconTintList(ContextCompat.getColorStateList(this, R.color.primary))
+            drawable.setTintList(ContextCompat.getColorStateList(this, R.color.primary))
+
+            (startIconDrawable as? Animatable)?.start()
+        }
+    } else {
+        this.context.applicationContext.apply {
+            (startIconDrawable as? Animatable)?.stop()
+            isStartIconVisible = false
+        }
+    }
+}
+
+fun getSimpleDate(format: String): SimpleDateFormat {
+    return SimpleDateFormat(format, Locale("id", "ID"))
+}
+
+fun ImageView.setTextDrawable(
+    nama: String,
+    @ColorRes colorText: Int,
+    @ColorRes colorBackground: Int? = null
+) {
+    val generator = ColorGenerator.MATERIAL
+    val text = TextDrawable.builder()
+        .beginConfig()
+        .textColor(this.context.getColorRes(colorText))
+        .height(this.measuredHeight)
+        .width(this.measuredWidth)
+        .bold()
+        .toUpperCase()
+        .endConfig()
+        .buildRound(
+            nama[0].toString(),
+            if (colorBackground != null) this.context.getColorRes(colorBackground) else generator?.getColor(
+                nama
+            )!!
+        )
+    this.setImageDrawable(text)
+}
+
+fun Context.getColorRes(@ColorRes res: Int) = ContextCompat.getColor(this, res)
+
+fun Context.getDrawableRes(@DrawableRes res: Int) = ContextCompat.getDrawable(this, res)
+
+fun Activity.makeStatusBarTransparent() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                decorView.systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            }
+            statusBarColor = Color.TRANSPARENT
+        }
+    }
+}

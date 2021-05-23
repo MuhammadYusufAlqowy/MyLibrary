@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.yadev.mylibrary.myimagepicker.ImagePickerActivity.Companion.getCancel
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.yadev.mylibrary.R
+import com.yadev.mylibrary.databinding.BottomSheetImagePickerBinding
 import java.io.File
 
 internal interface ResultListener<T> {
@@ -26,7 +28,8 @@ internal object DialogHelper {
      */
     fun showChooseAppDialog(context: Context, listener: ResultListener<ImageProvider>) {
         val bottomSheet = BottomSheetDialog(context)
-        bottomSheet.setContentView(R.layout.bottom_sheet_image_picker)
+        val layout = BottomSheetImagePickerBinding.inflate(LayoutInflater.from(context))
+        bottomSheet.setContentView(layout.root)
 
         bottomSheet.setOnCancelListener {
             listener.onResult(null)
@@ -51,16 +54,16 @@ internal object DialogHelper {
             .show()*/
 
         // Handle Camera option click
-        /*bottomSheet.lytCameraPick.setOnClickListener {
+        layout.lytCameraPick.setOnClickListener {
             listener.onResult(ImageProvider.CAMERA)
             bottomSheet.dismiss()
         }
 
         // Handle Gallery option click
-        bottomSheet.lytGalleryPick.setOnClickListener {
+        layout.lytGalleryPick.setOnClickListener {
             listener.onResult(ImageProvider.GALLERY)
             bottomSheet.dismiss()
-        }*/
+        }
     }
 }
 

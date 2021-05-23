@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_color">@color/placeholder</color>
+
+    <declare-styleable name="MyImageView">
+        <attr format="boolean" name="miv_use_gradient"/>
+        <attr format="integer" name="miv_cornerRadius"/>
+        <attr format="color" name="miv_backgroundColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="MyTextView">
+        <attr format="float" name="mtv_width_weight"/>
+        <attr format="float" name="mtv_height_weight"/>
+        <attr format="boolean" name="mtv_use_gradient"/>
+        <attr format="integer" name="mtv_cornerRadius"/>
+        <attr format="color" name="mtv_backgroundColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="PullToRefresh">
+        <attr name="AniBackColor" format="color" />
+        <attr name="AniForeColor" format="color" />
+        <attr name="CircleSmaller" format="integer"/>
+    </declare-styleable>
+</resources>
