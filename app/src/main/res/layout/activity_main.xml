@@ -1,25 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/imgPicture"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnPickImage"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/m16">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m8"
+            android:text="1"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m8"
+            android:text="2"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m8"
+            android:text="3"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m8"
+            android:text="4"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m8"
+            android:text="5"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m8"
+            android:text="6"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.yadev.mylibrary.BadgeImageView
+            android:id="@+id/btnQ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:badgeDrawable="@drawable/ic_camera"
+            app:badgeNumber="10" />
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pick Image"
-        app:layout_constraintTop_toBottomOf="@id/imgPicture"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white"
+        android:src="@drawable/ic_gallery"
+        app:backgroundTint="@android:color/holo_red_light"
+        android:layout_margin="@dimen/m16"
+        android:layout_gravity="bottom|end" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

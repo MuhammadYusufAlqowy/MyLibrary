@@ -28,11 +28,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.yadev.mylibrary.myimagepicker.ImagePicker
 import com.google.android.gms.common.api.ApiException
@@ -42,6 +44,7 @@ import com.google.android.gms.tasks.OnCanceledListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.karumi.dexter.Dexter
@@ -636,3 +639,34 @@ fun Activity.makeStatusBarTransparent() {
         }
     }
 }
+
+fun View.snackSucces(msg: String, anchorView: View? = null): MySnackbar.make {
+    val snack = MySnackbar.make(this,title = "Success", message = msg, anchorView = anchorView)
+    snack.showSuccess()
+    return snack
+}
+
+fun View.snackError(msg: String, anchorView: View? = null): MySnackbar.make {
+    val snack = MySnackbar.make(this,title = "Error", message = msg, anchorView = anchorView)
+    snack.showError()
+    return snack
+}
+
+fun View.snackWarning(msg: String, anchorView: View? = null): MySnackbar.make {
+    val snack = MySnackbar.make(this,title = "Warning", message = msg, anchorView = anchorView)
+    snack.showWarning()
+    return snack
+}
+
+fun View.snackInfo(msg: String, anchorView: View? = null): MySnackbar.make {
+    val snack = MySnackbar.make(this,title = "Info", message = msg, anchorView = anchorView)
+    snack.showInfo()
+    return snack
+}
+
+
+
+
+
+
+

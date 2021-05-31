@@ -15,12 +15,12 @@ import com.yadev.mylibrary.R
 import com.yadev.mylibrary.databinding.BottomSheetImagePickerBinding
 import java.io.File
 
-internal interface ResultListener<T> {
+interface ResultListener<T> {
 
     fun onResult(t: T?)
 }
 
-internal object DialogHelper {
+object DialogHelper {
 
     /**
      * Show Image Provide Picker Dialog. This will streamline the code to pick/capture image
@@ -180,6 +180,15 @@ open class ImagePicker {
          */
         constructor(fragment: Fragment) : this(fragment.requireActivity()) {
             this.fragment = fragment
+        }
+
+        /**
+         * Custom dialog chooser
+         */
+
+        fun customDialog():Builder{
+
+            return this
         }
 
         /**

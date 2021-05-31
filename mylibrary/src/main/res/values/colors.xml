@@ -13,6 +13,10 @@
     <color name="background">#F3F8FE</color>
     <color name="placeholder">#E0E0E0</color>
     <color name="gray">#BCBCBC</color>
-
+    <color name="error">#FF0315</color>
+    <color name="warning">#FFA900</color>
+    <color name="success">#4CAF50</color>
+    <color name="info">#3F51B5</color>
+    <color name="disable">#EDF1F7</color>
 
 </resources>
