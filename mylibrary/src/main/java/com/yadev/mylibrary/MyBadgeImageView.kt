@@ -5,32 +5,28 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
 import com.yadev.mylibrary.databinding.LayoutBadgeImageViewBinding
 
-class BadgeImageView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+class MyBadgeImageView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
     private val layout =
         LayoutBadgeImageViewBinding.inflate(LayoutInflater.from(context), this, false)
 
     init {
         addView(layout.root)
         layout.apply {
-            val attr = context.obtainStyledAttributes(attrs, R.styleable.BadgeImageView)
-            val badgeDrawable = attr.getDrawable(R.styleable.BadgeImageView_badgeDrawable)
-            val badgeNumber = attr.getInteger(R.styleable.BadgeImageView_badgeNumber,0)
-            val strokeWidth = attr.getDimensionPixelSize(R.styleable.BadgeImageView_badgeStrokeWidth,context.resources.getDimensionPixelSize(R.dimen._1adp))
-            val strokeColor = attr.getColor(R.styleable.BadgeImageView_badgeStrokeColor,Color.WHITE)
-            val badgeSize = attr.getDimensionPixelSize(R.styleable.BadgeImageView_badgeSize,context.resources.getDimensionPixelSize(R.dimen._24adp))
-            val badgeDrawableTint = attr.getColor(R.styleable.BadgeImageView_badgeDrawableTint, Color.BLACK)
+            val attr = context.obtainStyledAttributes(attrs, R.styleable.MyBadgeImageView)
+            val badgeDrawable = attr.getDrawable(R.styleable.MyBadgeImageView_badgeDrawable)
+            val badgeNumber = attr.getInteger(R.styleable.MyBadgeImageView_badgeNumber,0)
+            val strokeWidth = attr.getDimensionPixelSize(R.styleable.MyBadgeImageView_badgeStrokeWidth,context.resources.getDimensionPixelSize(R.dimen._1adp))
+            val strokeColor = attr.getColor(R.styleable.MyBadgeImageView_badgeStrokeColor,Color.WHITE)
+            val badgeSize = attr.getDimensionPixelSize(R.styleable.MyBadgeImageView_badgeSize,context.resources.getDimensionPixelSize(R.dimen._24adp))
+            val badgeDrawableTint = attr.getColor(R.styleable.MyBadgeImageView_badgeDrawableTint, Color.BLACK)
             imgIcon.setImageDrawable(badgeDrawable)
             imgIcon.imageTintList = ColorStateList.valueOf(badgeDrawableTint)
             imgIcon.updateLayoutParams<ViewGroup.LayoutParams> {

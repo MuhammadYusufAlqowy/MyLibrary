@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="m8">8dp</dimen>
-    <dimen name="m16">16dp</dimen>
-    <dimen name="m10">10dp</dimen>
-    <dimen name="r16">16dp</dimen>
-    <dimen name="r8">8dp</dimen>
-    <dimen name="t12">12sp</dimen>
-    <dimen name="t14">14sp</dimen>
-    <dimen name="t16">16sp</dimen>
-    <dimen name="t18">18sp</dimen>
-    <dimen name="t20">20sp</dimen>
-    <dimen name="r4">4dp</dimen>
+    <dimen name="m8">@dimen/_8adp</dimen>
+    <dimen name="m16">@dimen/_16adp</dimen>
+    <dimen name="m10">@dimen/_10adp</dimen>
+    <dimen name="r16">@dimen/_16adp</dimen>
+    <dimen name="r8">@dimen/_8adp</dimen>
+    <dimen name="t12">@dimen/_12asp</dimen>
+    <dimen name="t14">@dimen/_14asp</dimen>
+    <dimen name="t16">@dimen/_16asp</dimen>
+    <dimen name="t18">@dimen/_18asp</dimen>
+    <dimen name="t20">@dimen/_20asp</dimen>
+    <dimen name="r4">@dimen/_4adp</dimen>
+    <dimen name="pageMargin">@dimen/_4adp</dimen>
+    <dimen name="offset">@dimen/_16adp</dimen>
+    <dimen name="pageMarginAndOffset">@dimen/_50adp</dimen>
 </resources>

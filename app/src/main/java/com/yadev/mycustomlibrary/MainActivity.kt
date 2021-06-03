@@ -1,13 +1,9 @@
 package com.yadev.mycustomlibrary
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
 import com.yadev.mycustomlibrary.databinding.ActivityMainBinding
 import com.yadev.mylibrary.*
 import com.yadev.mylibrary.activity.BaseActivity
-import kotlin.coroutines.CoroutineContext
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(false) {
@@ -52,7 +48,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(false) {
                 val loading = MyLoading.create(this@MainActivity).show()
             }
         }
-
     }
 
     override fun getBindingView(): ActivityMainBinding {
