@@ -75,10 +75,10 @@ class MySnackbar {
             return this
         }
 
-        /*fun showWarning(): make {
+        fun show(): make {
             snackbar.show()
             return this
-        }*/
+        }
 
         fun setAction(action: String, listener: View.OnClickListener): make {
             myLayout.apply {
