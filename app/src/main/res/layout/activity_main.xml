@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:badgeDrawable="@drawable/ic_camera"
-                app:badgeNumber="10" />
+                app:badgeNumber="99" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton

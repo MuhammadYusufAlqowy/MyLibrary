@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/oxygen</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:textSize">@dimen/t12</item>
     </style>
 
     <style name="FullScreen" parent="Theme.MyCustomLibrary">
@@ -33,6 +34,56 @@
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
+    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxCornerRadiusBottomStart">@dimen/r8</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/r8</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/r8</item>
+        <item name="boxCornerRadiusTopStart">@dimen/r8</item>
+        <item name="boxBackgroundColor">@color/background</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="hintTextAppearance">@style/TabTextApperance</item>
+        <item name="prefixTextAppearance">@style/InputTextApperance</item>
+        <item name="suffixTextAppearance">@style/InputTextApperance</item>
+        <item name="helperTextTextAppearance">@style/TabTextApperance</item>
+        <item name="errorTextAppearance">@style/TabTextApperance</item>
+        <item name="boxCollapsedPaddingTop">@dimen/_4adp</item>
+        <item name="android:textSize">@dimen/_10asp</item>
+    </style>
 
+    <style name="MyTextInputLayoutDropDown" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="boxCornerRadiusBottomStart">@dimen/r8</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/r8</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/r8</item>
+        <item name="boxCornerRadiusTopStart">@dimen/r8</item>
+        <item name="boxBackgroundColor">@color/background</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="hintTextAppearance">@style/TabTextApperance</item>
+        <item name="prefixTextAppearance">@style/InputTextApperance</item>
+        <item name="suffixTextAppearance">@style/InputTextApperance</item>
+        <item name="helperTextTextAppearance">@style/TabTextApperance</item>
+        <item name="errorTextAppearance">@style/TabTextApperance</item>
+        <item name="android:textSize">@dimen/_10asp</item>
+    </style>
+    <style name="TabTextApperance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/_10asp</item>
+    </style>
+
+    <style name="InputTextApperance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/_10asp</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">@dimen/_12asp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyButtonOutlineStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">@dimen/_12asp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>

@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:text="Title"
                 android:layout_margin="@dimen/m8"
-                android:textSize="@dimen/t20"
+                android:textSize="@dimen/t16"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="Message"
                 android:layout_margin="@dimen/m8"
-                android:textSize="@dimen/t14"
+                android:textSize="@dimen/t12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle" />

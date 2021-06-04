@@ -1,13 +1,19 @@
 package com.yadev.mycustomlibrary
 
 import android.os.Bundle
+import android.os.PersistableBundle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.content.res.ResourcesCompat
 import com.yadev.mycustomlibrary.databinding.ActivityMainBinding
 import com.yadev.mylibrary.*
 import com.yadev.mylibrary.activity.BaseActivity
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(false) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         layout.apply {
             btn1.setOnClickListener {
