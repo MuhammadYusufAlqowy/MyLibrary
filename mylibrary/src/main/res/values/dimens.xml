@@ -14,4 +14,5 @@
     <dimen name="pageMargin">@dimen/_4adp</dimen>
     <dimen name="offset">@dimen/_16adp</dimen>
     <dimen name="pageMarginAndOffset">@dimen/_50adp</dimen>
+    <dimen name="m4">@dimen/_4adp</dimen>
 </resources>
