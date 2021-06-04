@@ -80,6 +80,13 @@ class MySnackbar {
             return this
         }
 
+        fun dismiss():make{
+            if (snackbar.isShown) {
+                snackbar.dismiss()
+            }
+            return this
+        }
+
         fun setAction(action: String, listener: View.OnClickListener): make {
             myLayout.apply {
                 btnAction.visibility = View.VISIBLE
