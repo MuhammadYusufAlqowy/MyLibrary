@@ -65,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/m8"
                 android:text="6"
+                app:cornerRadius="@dimen/r4"
                 android:layout_gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -73,7 +74,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:badgeDrawable="@drawable/ic_camera"
-                app:badgeNumber="99" />
+                app:badgeNumber="10" />
+        <com.yadev.mylibrary.MyImageSlider
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sliderIndicatorType="dot"
+            app:sliderIndicatorActiveColor="@color/warning"
+            app:sliderIndicatorDisableColor="@color/gray"
+            app:sliderIndicatorSize="@dimen/m4"
+            app:sliderMargin="@dimen/m4"
+            app:sliderOffset="@dimen/m16"
+            android:layout_margin="8dp"/>
+        <com.yadev.mylibrary.MyStepper
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:stepMaxValue="11"
+            app:stepValueIncrement="1"
+            app:stepMinValue="2"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton

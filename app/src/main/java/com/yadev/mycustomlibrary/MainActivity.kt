@@ -1,19 +1,13 @@
 package com.yadev.mycustomlibrary
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
-import androidx.core.content.res.ResourcesCompat
 import com.yadev.mycustomlibrary.databinding.ActivityMainBinding
 import com.yadev.mylibrary.*
 import com.yadev.mylibrary.activity.BaseActivity
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(false) {
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         layout.apply {
             btn1.setOnClickListener {
@@ -27,7 +21,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(false) {
                 }
             }
             btn3.setOnClickListener {
-                root.snackWarning("Selemat!").setAction("Lanjutkan"){
+                root.snackWarning("Selemat!").setAction("Lanjutkanssssssssssssss"){
 
                 }
             }
@@ -53,7 +47,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(false) {
             btnQ.setOnClickListener{
                 val loading = MyLoading.create(this@MainActivity).show()
             }
+            slider.apply {
+                setAdapter(adaptertes())
+            }
         }
+
     }
 
     override fun getBindingView(): ActivityMainBinding {

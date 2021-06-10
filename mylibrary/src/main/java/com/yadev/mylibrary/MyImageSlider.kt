@@ -1,4 +1,3 @@
-/*
 package com.yadev.mylibrary
 
 import android.content.Context
@@ -27,7 +26,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     var pageMargin: Int
     var pageOffset: Int
     lateinit var update: Runnable
-    var rclv: RecyclerView
+//    var rclv: RecyclerView
     var totalItemCount: Int = 0
 
 
@@ -64,7 +63,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             springIndicator.setDotIndicatorColor(indicatorActiveColor)
             springIndicator.setStrokeDotsIndicatorColor(indicatorDisableColor)
 
-            rclv = viewPager.getChildAt(0) as RecyclerView
+//            rclv = viewPager.getChildAt(0) as RecyclerView
 
             if (!enableIndicator) {
                 wormIndicator.visibility = View.GONE
@@ -96,7 +95,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 adapter.pageOffset = pageOffset
                 adapter.pageMargin = pageMargin
                 setAdapter(adapter)
-                setCurrentItem(1, false)
                 totalItemCount = adapter.itemCount
                 orientation = ORIENTATION_HORIZONTAL
                 clipToPadding = false
@@ -119,18 +117,16 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                     }
                 }
 
-                rclv.apply {
+                /*rclv.apply {
                     addOnScrollListener(
                         InfiniteScrollBehaviour(
                             totalItemCount,
                             layoutManager as LinearLayoutManager
                         )
                     )
-                }
+                }*/
 
-
-                */
-/*var currentPage = currentItem
+                var currentPage = currentItem
                 registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
@@ -148,7 +144,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                         handler.post(update)
                     }
                     timer.schedule(timerTask, scrollDuration, scrollDuration)
-                }*//*
+                }
 
             }
             wormIndicator.setViewPager2(viewPager)
@@ -186,4 +182,3 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     }
 }
 
-*/

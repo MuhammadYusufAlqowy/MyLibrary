@@ -18,11 +18,12 @@ class MySnackbar {
         anchorView: View? = null
     ) {
         private var snackbar: Snackbar = Snackbar.make(view, message, duration)
-        var myLayout: LayoutCustomSnackbarBinding = LayoutCustomSnackbarBinding.inflate(LayoutInflater.from(view.context))
+        var myLayout: LayoutCustomSnackbarBinding =
+            LayoutCustomSnackbarBinding.inflate(LayoutInflater.from(view.context))
 
         init {
             val rootView = (snackbar.view as ViewGroup)
-            if (anchorView!=null){
+            if (anchorView != null) {
                 snackbar.anchorView = anchorView
             }
             rootView.setPadding(0, 0, 0, 0)
@@ -80,10 +81,15 @@ class MySnackbar {
             return this
         }
 
-        fun dismiss():make{
+        fun dismiss(): make {
             if (snackbar.isShown) {
                 snackbar.dismiss()
             }
+            return this
+        }
+
+        fun setCancelable(duration: Int): make {
+            snackbar.duration = duration
             return this
         }
 
@@ -91,11 +97,10 @@ class MySnackbar {
             myLayout.apply {
                 btnAction.visibility = View.VISIBLE
                 btnAction.text = action
+                btnAction.isSelected = true
                 btnAction.setOnClickListener {
                     listener.onClick(it)
-                    if (snackbar.isShown) {
-                        snackbar.dismiss()
-                    }
+                    snackbar.dismiss()
                 }
             }
             return this

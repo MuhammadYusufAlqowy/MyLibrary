@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/m4"
+        app:cardCornerRadius="@dimen/r8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m4">
+
+            <ImageView
+                android:id="@+id/btnMin"
+                android:layout_width="@dimen/_24adp"
+                android:layout_height="@dimen/_24adp"
+                android:layout_margin="0dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/m2"
+                android:src="@drawable/ic_min"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/color_button" />
+
+            <ImageView
+                android:id="@+id/btnPlus"
+                android:layout_width="@dimen/_24adp"
+                android:layout_height="@dimen/_24adp"
+                android:layout_margin="0dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/m2"
+                android:src="@drawable/ic_plus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/color_button" />
+
+            <TextView
+                android:id="@+id/tvValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:singleLine="true"
+                android:layout_marginStart="@dimen/m8"
+                android:layout_marginEnd="@dimen/m8"
+                android:textSize="@dimen/t11"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnPlus"
+                app:layout_constraintStart_toEndOf="@+id/btnMin"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

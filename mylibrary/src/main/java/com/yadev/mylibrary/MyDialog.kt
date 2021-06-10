@@ -17,11 +17,10 @@ class MyDialog {
 
         init {
             dialog.setView(layout.root)
-//            dialog?.setCancelable(false)
-            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val param = dialog.window?.attributes
             param?.dimAmount = 0.5f
-            dialog.window?.setAttributes(param)
+            dialog.window?.attributes = param
             dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             layout.apply {
                 if (title.isNullOrEmpty()) {
@@ -31,6 +30,11 @@ class MyDialog {
                 tvMessage.text = message
                 imgIcon.setImageResource(image)
             }
+        }
+
+        fun setCancelable(boolean: Boolean) : Build{
+            dialog.setCancelable(boolean)
+            return this
         }
 
         fun addOnNegativeButton(button: String, listener: View.OnClickListener): Build {
@@ -61,6 +65,11 @@ class MyDialog {
 
         fun show():Build{
             dialog.show()
+            return this
+        }
+
+        fun dismiss():Build{
+            dialog.dismiss()
             return this
         }
 

@@ -10,12 +10,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yadev.mylibrary.databinding.LayoutLoadingBinding
 
 class MyLoading {
-    class create(context: Context, @RawRes lottieAnim:Int = R.raw.loading){
+    class create(context: Context, @RawRes lottieAnim: Int = R.raw.loading) {
         private val loading = MaterialAlertDialogBuilder(context).create()
         val layout = LayoutLoadingBinding.inflate(LayoutInflater.from(context))
+
         init {
             loading.setView(layout.root)
-            loading?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            loading.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val param = loading.window?.attributes
             param?.dimAmount = 0.5f
             loading.window?.attributes = param
@@ -25,15 +26,13 @@ class MyLoading {
             }
         }
 
-        fun show():create{
+        fun show(): create {
             loading.show()
             return this
         }
 
-        fun dismiss():create{
-            if (loading.isShowing){
-                loading.dismiss()
-            }
+        fun dismiss(): create {
+            loading.dismiss()
             return this
         }
     }

@@ -24,9 +24,8 @@
         android:layout_toRightOf="@id/imgIcon"
         android:background="@drawable/bg_circle"
         android:gravity="center"
-        android:textStyle="bold"
         android:text="99+"
         android:textColor="@color/white"
-        android:textSize="@dimen/_8asp"/>
+        android:textSize="@dimen/t7"/>
 
 </RelativeLayout>

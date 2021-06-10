@@ -168,7 +168,7 @@ fun checkInputEmail(input: Any): Boolean {
         check =
             !TextUtils.isEmpty(input.editText?.text.toString()) && android.util.Patterns.EMAIL_ADDRESS.matcher(
                 input.editText?.text.toString()
-            ).matches();
+            ).matches()
         if (input.editText?.text.toString().isEmpty()) {
             check = false
             input.error = "Email tidak boleh kosong!"
@@ -351,9 +351,9 @@ class MyLocation(val context: Context, val listener: LocationListener) {
                     val locationManager =
                         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
                     val request = LocationRequest()
-                    request.setInterval(10000)
-                    request.setFastestInterval(5000)
-                    request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    request.interval = 10000
+                    request.fastestInterval = 5000
+                    request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
                     val client =
                         LocationServices.getFusedLocationProviderClient(context as Activity)
 
@@ -477,9 +477,9 @@ class MyLocation(val context: Context, val listener: LocationListener) {
  */
 fun Context.getStatusBarHeight(): Int {
     var result = 0
-    val resourceId: Int = getResources().getIdentifier("status_bar_height", "dimen", "android")
+    val resourceId: Int = resources.getIdentifier("status_bar_height", "dimen", "android")
     if (resourceId > 0) {
-        result = getResources().getDimensionPixelSize(resourceId)
+        result = resources.getDimensionPixelSize(resourceId)
     }
     return result
 }
@@ -550,9 +550,9 @@ fun Context.getCacheSize(): Long {
 fun getDirSize(dir: File): Long {
     var size: Long = 0
     for (file in dir.listFiles()) {
-        if (file != null && file.isDirectory()) {
+        if (file != null && file.isDirectory) {
             size += getDirSize(file)
-        } else if (file != null && file.isFile()) {
+        } else if (file != null && file.isFile) {
             size += file.length()
         }
     }
@@ -664,9 +664,10 @@ fun View.snackInfo(msg: String, anchorView: View? = null): MySnackbar.make {
     return snack
 }
 
+fun View.setPaddingHorizontal(padding: Int) {
+    setPadding(padding, paddingTop, padding, paddingBottom)
+}
 
-
-
-
-
-
+fun View.setPaddingVertical(padding: Int) {
+    setPadding(paddingLeft, padding, paddingRight, padding)
+}

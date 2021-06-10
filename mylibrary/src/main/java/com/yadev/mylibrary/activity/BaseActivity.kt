@@ -5,13 +5,18 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.yadev.mylibrary.R
 import com.yadev.mylibrary.hideSoftKeyboard
 import com.yadev.mylibrary.makeStatusBarTransparent
 
-abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean = false) : AppCompatActivity(){
+abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean) : AppCompatActivity(){
+    companion object{
+        const val VISIBLE = View.VISIBLE
+        const val GONE = View.GONE
+    }
     lateinit var layout : V
     private var dispatch = false
     private var fontScale = false
@@ -21,7 +26,6 @@ abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean = false) : A
             setTheme(R.style.FullScreen)
             makeStatusBarTransparent()
         }
-//        layout = bindingFactory(layoutInflater)
         layout = getBindingView()
         setContentView(layout.root)
 
