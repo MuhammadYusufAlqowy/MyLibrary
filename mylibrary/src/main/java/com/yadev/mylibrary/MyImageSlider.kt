@@ -28,7 +28,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
     var totalItemCount: Int = 0
 
-
     init {
         addView(layout.root)
         layout.apply {
@@ -144,7 +143,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                     registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                         override fun onPageSelected(position: Int) {
                             super.onPageSelected(position)
-                            handler.removeCallbacks(update)
+//                            handler.removeCallbacks(update)
                             currentPage = position
                         }
 
