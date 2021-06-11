@@ -22,7 +22,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         LayoutMyImageSliderBinding.inflate(LayoutInflater.from(context), this, false)
     var scrollDuration: Long
     var autoScroll: Boolean
-    var timer: Timer = Timer()
     var pageMargin: Int
     var pageOffset: Int
     lateinit var update: Runnable
@@ -150,7 +149,8 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                         }
 
                     })
-                    if (autoScroll) {
+                    /*if (autoScroll) {
+                        var timer: Timer = Timer()
                         update = Runnable {
                             viewPager.setCurrentItem(currentPage % adapter.itemCount, true)
                             currentPage++
@@ -159,7 +159,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                             handler.post(update)
                         }
                         timer.schedule(timerTask, scrollDuration, scrollDuration)
-                    }
+                    }*/
                     wormIndicator.setViewPager2(viewPager)
                     dotIndicator.setViewPager2(viewPager)
                     springIndicator.setViewPager2(viewPager)
@@ -196,5 +196,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             else -> layout.viewPager.currentItem - 1
         }
     }
+
+
 }
 
