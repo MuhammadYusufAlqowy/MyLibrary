@@ -50,6 +50,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(false) {
             slider.apply {
                 setAdapter(adaptertes())
             }
+
+            fab.setOnClickListener {
+                pickImage(this@MainActivity,image)
+            }
         }
 
     }

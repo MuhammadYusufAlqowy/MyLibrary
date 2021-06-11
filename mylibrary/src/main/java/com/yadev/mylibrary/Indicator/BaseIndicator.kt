@@ -321,4 +321,12 @@ abstract class BaseIndicator @JvmOverloads constructor(
             requestLayout()
         }
     }
+
+    fun setDotSize(size:Float){
+        dotsSize = size
+    }
+
+    fun setDotSpacing(spacing:Float){
+        dotsSpacing = spacing
+    }
 }

@@ -26,7 +26,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     var pageMargin: Int
     var pageOffset: Int
     lateinit var update: Runnable
-//    var rclv: RecyclerView
+
     var totalItemCount: Int = 0
 
 
@@ -40,6 +40,14 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             val enableIndicator =
                 attr.getBoolean(R.styleable.MyImageSlider_sliderEnableIndicator, true)
             val indicatorStyle = attr.getInt(R.styleable.MyImageSlider_sliderIndicatorType, 0)
+            val indicatorSize = attr.getDimension(
+                R.styleable.MyImageSlider_sliderIndicatorSize,
+                resources.getDimension(R.dimen._7adp)
+            )
+            val indicatorSpacing = attr.getDimension(
+                R.styleable.MyImageSlider_sliderIndicatorSpacing,
+                resources.getDimension(R.dimen._2adp)
+            )
             val indicatorActiveColor = attr.getColor(
                 R.styleable.MyImageSlider_sliderIndicatorActiveColor,
                 context.getColorRes(R.color.info)
@@ -62,6 +70,12 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             dotIndicator.dotsColor = indicatorDisableColor
             springIndicator.setDotIndicatorColor(indicatorActiveColor)
             springIndicator.setStrokeDotsIndicatorColor(indicatorDisableColor)
+            dotIndicator.setDotSize(indicatorSize)
+            springIndicator.setDotSize(indicatorSize)
+            wormIndicator.setDotSize(indicatorSize)
+            dotIndicator.setDotSpacing(indicatorSpacing)
+            springIndicator.setDotSpacing(indicatorSpacing)
+            wormIndicator.setDotSpacing(indicatorSpacing)
 
 //            rclv = viewPager.getChildAt(0) as RecyclerView
 
@@ -101,55 +115,57 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 clipChildren = false
                 offscreenPageLimit = 3
 
-                val pageMarginPx = pageMargin
-                val offsetPx = pageOffset
-                setPageTransformer { page, position ->
-                    val viewPager = page.parent.parent as ViewPager2
-                    val offset = position * -(2 * offsetPx + pageMarginPx)
-                    if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
-                        if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                            page.translationX = -offset
+                if (adapter.itemCount > 1) {
+                    val pageMarginPx = pageMargin
+                    val offsetPx = pageOffset
+                    setPageTransformer { page, position ->
+                        val viewPager = page.parent.parent as ViewPager2
+                        val offset = position * -(3 * offsetPx + pageMarginPx)
+                        if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
+                            if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                                page.translationX = -offset
+                            } else {
+                                page.translationX = offset
+                            }
                         } else {
-                            page.translationX = offset
+                            page.translationY = offset
                         }
-                    } else {
-                        page.translationY = offset
                     }
-                }
 
-                /*rclv.apply {
-                    addOnScrollListener(
-                        InfiniteScrollBehaviour(
-                            totalItemCount,
-                            layoutManager as LinearLayoutManager
+                    /*rclv.apply {
+                        addOnScrollListener(
+                            InfiniteScrollBehaviour(
+                                totalItemCount,
+                                layoutManager as LinearLayoutManager
+                            )
                         )
-                    )
-                }*/
+                    }*/
 
-                var currentPage = currentItem
-                registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        handler.removeCallbacks(update)
-                        currentPage = position
-                    }
+                    var currentPage = currentItem
+                    registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            handler.removeCallbacks(update)
+                            currentPage = position
+                        }
 
-                })
-                if (autoScroll) {
-                    update = Runnable {
-                        viewPager.setCurrentItem(currentPage % adapter.itemCount, true)
-                        currentPage++
+                    })
+                    if (autoScroll) {
+                        update = Runnable {
+                            viewPager.setCurrentItem(currentPage % adapter.itemCount, true)
+                            currentPage++
+                        }
+                        val timerTask = timerTask {
+                            handler.post(update)
+                        }
+                        timer.schedule(timerTask, scrollDuration, scrollDuration)
                     }
-                    val timerTask = timerTask {
-                        handler.post(update)
-                    }
-                    timer.schedule(timerTask, scrollDuration, scrollDuration)
+                    wormIndicator.setViewPager2(viewPager)
+                    dotIndicator.setViewPager2(viewPager)
+                    springIndicator.setViewPager2(viewPager)
                 }
-
             }
-            wormIndicator.setViewPager2(viewPager)
-            dotIndicator.setViewPager2(viewPager)
-            springIndicator.setViewPager2(viewPager)
+
         }
         return adapter
     }

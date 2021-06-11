@@ -19,6 +19,7 @@ import android.provider.Settings
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -28,15 +29,19 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-import com.yadev.mylibrary.myimagepicker.ImagePicker
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
+import com.bumptech.glide.load.resource.bitmap.FitCenter
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -44,7 +49,6 @@ import com.google.android.gms.tasks.OnCanceledListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.karumi.dexter.Dexter
@@ -56,9 +60,9 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import com.yadev.mylibrary.activity.WebViewActivity
+import com.yadev.mylibrary.myimagepicker.ImagePicker
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.lang.Exception
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -250,7 +254,7 @@ fun checkInputPassword(input: Any): Boolean {
 /**
  * Mengambil gambar dari gallery atau kamera
  */
-fun pickImage(activity: Activity, imageView: ImageView) {
+fun pickImage(activity: Activity, imageView: ImageView, cropSquare: Boolean = true, compress:Int = 512, pickType:Int = DEFAULT, title: String = "Pilih Foto") {
     Dexter.withContext(activity)
         .withPermissions(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -259,70 +263,40 @@ fun pickImage(activity: Activity, imageView: ImageView) {
         .withListener(object : MultiplePermissionsListener {
             override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
                 if (p0?.areAllPermissionsGranted()!!) {
-                    ImagePicker.with(activity)
-                        .cropSquare()
-                        .compress(512)
+                    val imagePicker = ImagePicker.with(activity)
                         .saveDir(File(activity.externalCacheDir, "ImagePicker"))
                         .maxResultSize(1080, 1080)
-                        .start { resultCode, data ->
-                            if (resultCode == Activity.RESULT_OK) {
-                                Glide.with(activity).load(data?.data)
-                                    .into(imageView)
-                                imageView.tag = true
-                            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                                Toast.makeText(
-                                    activity,
-                                    ImagePicker.getError(data),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                        .compress(compress)
+                        .setTitle(title)
+
+                    when(pickType){
+                        1 -> imagePicker.galleryOnly()
+                        2 -> imagePicker.cameraOnly()
+                    }
+                    if (cropSquare){
+                        imagePicker.cropSquare()
+                    }else{
+                        imagePicker.crop()
+                    }
+                    imagePicker.
+                    start { resultCode, data ->
+                        if (resultCode == Activity.RESULT_OK) {
+                            Glide.with(activity).load(data?.data)
+                                .into(imageView)
+                            imageView.tag = true
+                        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                            Toast.makeText(
+                                activity,
+                                ImagePicker.getError(data),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+                    }
                 }
             }
 
             override fun onPermissionRationaleShouldBeShown(
                 p0: MutableList<PermissionRequest>?,
-                p1: PermissionToken?
-            ) {
-                p1?.continuePermissionRequest()
-            }
-
-        }).check()
-
-}
-
-fun pickImageFreeCrop(activity: Activity, imageView: ImageView) {
-    Dexter.withContext(activity)
-        .withPermissions(
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        .withListener(object : MultiplePermissionsListener {
-            override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
-                if (p0?.areAllPermissionsGranted()!!) {
-                    ImagePicker.with(activity)
-                        .crop()
-                        .compress(512)
-                        .saveDir(File(activity.externalCacheDir, "ImagePicker"))
-                        .maxResultSize(1080, 1080)
-                        .start { resultCode, data ->
-                            if (resultCode == Activity.RESULT_OK) {
-                                Glide.with(activity).load(data?.data)
-                                    .into(imageView)
-                                imageView.tag = true
-                            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                                Toast.makeText(
-                                    activity,
-                                    ImagePicker.getError(data),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                }
-            }
-
-            override fun onPermissionRationaleShouldBeShown(
-                p0: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
                 p1: PermissionToken?
             ) {
                 p1?.continuePermissionRequest()
@@ -641,25 +615,25 @@ fun Activity.makeStatusBarTransparent() {
 }
 
 fun View.snackSucces(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this,title = "Success", message = msg, anchorView = anchorView)
+    val snack = MySnackbar.make(this, title = "Success", message = msg, anchorView = anchorView)
     snack.showSuccess()
     return snack
 }
 
 fun View.snackError(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this,title = "Error", message = msg, anchorView = anchorView)
+    val snack = MySnackbar.make(this, title = "Error", message = msg, anchorView = anchorView)
     snack.showError()
     return snack
 }
 
 fun View.snackWarning(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this,title = "Warning", message = msg, anchorView = anchorView)
+    val snack = MySnackbar.make(this, title = "Warning", message = msg, anchorView = anchorView)
     snack.showWarning()
     return snack
 }
 
 fun View.snackInfo(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this,title = "Info", message = msg, anchorView = anchorView)
+    val snack = MySnackbar.make(this, title = "Info", message = msg, anchorView = anchorView)
     snack.showInfo()
     return snack
 }
@@ -670,4 +644,49 @@ fun View.setPaddingHorizontal(padding: Int) {
 
 fun View.setPaddingVertical(padding: Int) {
     setPadding(paddingLeft, padding, paddingRight, padding)
+}
+
+fun ImageView.setImageUrl(
+    url: String,
+    key: String? = "",
+    type: BitmapTransformation = FIT_CENTER,
+    roundedCorner: Int = 1,
+    cacheStrategy: DiskCacheStrategy = DiskCacheStrategy.ALL,
+    @DrawableRes errorDrawable: Int = R.drawable.ic_error_cloud
+) {
+    val circularProgressDrawable = CircularProgressDrawable(this.context)
+    circularProgressDrawable.strokeWidth = 4f
+    circularProgressDrawable.centerRadius = 25f
+    circularProgressDrawable.start()
+    Glide.with(this.context.applicationContext).load(url)
+        .apply(
+            RequestOptions().transform(type, RoundedCorners(roundedCorner))
+                .diskCacheStrategy(cacheStrategy)
+                .signature(ObjectKey(key!!))
+        ).placeholder(circularProgressDrawable)
+        .error(errorDrawable)
+        .into(this)
+}
+
+fun ImageView.setImageBase64(
+    base64: String,
+    key: String = "",
+    type: BitmapTransformation,
+    roundedCorner: Int = 0,
+    cacheStrategy: DiskCacheStrategy = DiskCacheStrategy.ALL,
+    @DrawableRes errorDrawable: Int
+) {
+    val circularProgressDrawable = CircularProgressDrawable(this.context)
+    circularProgressDrawable.strokeWidth = 4f
+    circularProgressDrawable.centerRadius = 25f
+    circularProgressDrawable.start()
+    Glide.with(this.context.applicationContext).load(Base64.decode(base64, Base64.DEFAULT))
+        .apply(
+            RequestOptions().transform(type, RoundedCorners(roundedCorner))
+                .diskCacheStrategy(cacheStrategy)
+                .signature(ObjectKey(key))
+        )
+        .placeholder(circularProgressDrawable)
+        .error(errorDrawable)
+        .into(this)
 }

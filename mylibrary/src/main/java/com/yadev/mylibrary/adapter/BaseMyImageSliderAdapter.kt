@@ -7,6 +7,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.yadev.mylibrary.toDp
+import com.yadev.mylibrary.toPx
 
 abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableList<T>) :
     RecyclerView.Adapter<BaseMyImageSliderAdapter.ViewHolder>() {
@@ -27,15 +28,34 @@ abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = fakeList[position]
+        val item = list[position]
         layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
             leftMargin = pageMargin + pageOffset
             rightMargin = pageMargin + pageOffset
+        }
+        if (itemCount > 1) {
+            if (position == 0) {
+                layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    leftMargin = pageMargin
+                    rightMargin = (pageMargin + (2 * pageOffset))
+                }
+            }
+            if (position == itemCount - 1) {
+                layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    leftMargin = (pageMargin + (2 * pageOffset))
+                    rightMargin = pageMargin
+                }
+            }
+        }else{
+            layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = pageMargin
+                rightMargin = pageMargin
+            }
         }
         bind(item, layout)
     }
 
     override fun getItemCount(): Int {
-        return fakeList.size
+        return list.size
     }
 }

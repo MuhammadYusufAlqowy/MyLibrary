@@ -26,10 +26,11 @@ object DialogHelper {
      * Show Image Provide Picker Dialog. This will streamline the code to pick/capture image
      *
      */
-    fun showChooseAppDialog(context: Context, listener: ResultListener<ImageProvider>) {
+    fun showChooseAppDialog(context: Context, listener: ResultListener<ImageProvider>, title:String = "Pilih Foto") {
         val bottomSheet = BottomSheetDialog(context)
         val layout = BottomSheetImagePickerBinding.inflate(LayoutInflater.from(context))
         bottomSheet.setContentView(layout.root)
+
 
         bottomSheet.setOnCancelListener {
             listener.onResult(null)
@@ -175,6 +176,8 @@ open class ImagePicker {
          */
         private var saveDir: String? = null
 
+        private var title:String = "Pilih Foto"
+
         /**
          * Call this while picking image for fragment.
          */
@@ -266,6 +269,11 @@ open class ImagePicker {
             return this
         }
 
+        fun setTitle(title: String = "Pilih Foto"):Builder{
+            this.title = title
+            return this
+        }
+
         /**
          * Compress Image so that max image size can be below specified size
          *
@@ -349,7 +357,7 @@ open class ImagePicker {
                         startActivity(reqCode)
                     }
                 }
-            })
+            },title = title)
         }
 
         /**
@@ -367,7 +375,7 @@ open class ImagePicker {
                         completionHandler?.invoke(Activity.RESULT_CANCELED, intent)
                     }
                 }
-            })
+            },title = title)
         }
 
         /**

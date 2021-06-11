@@ -8,12 +8,12 @@
     tools:context=".MainActivity">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/m16">
+            android:orientation="vertical">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn1"
                 android:layout_width="wrap_content"
@@ -71,10 +71,17 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
             <com.yadev.mylibrary.MyBadgeImageView
                 android:id="@+id/btnQ"
+                android:layout_marginStart="@dimen/m16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:badgeDrawable="@drawable/ic_camera"
                 app:badgeNumber="10" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/m30"
+            android:layout_marginStart="@dimen/m8"
+            android:background="@color/warning"/>
+
         <com.yadev.mylibrary.MyImageSlider
             android:id="@+id/slider"
             android:layout_width="match_parent"
@@ -82,18 +89,24 @@
             app:sliderIndicatorType="dot"
             app:sliderIndicatorActiveColor="@color/warning"
             app:sliderIndicatorDisableColor="@color/gray"
-            app:sliderIndicatorSize="@dimen/m4"
+            app:sliderIndicatorSize="@dimen/m7"
             app:sliderMargin="@dimen/m4"
-            app:sliderOffset="@dimen/m16"
-            android:layout_margin="8dp"/>
+            app:sliderOffset="@dimen/m16" />
         <com.yadev.mylibrary.MyStepper
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:stepMaxValue="11"
             app:stepValueIncrement="1"
             app:stepMinValue="2"/>
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"/>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

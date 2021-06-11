@@ -39,6 +39,7 @@
         <attr name="sliderEnableIndicator" format="boolean" />
         <attr name="sliderIndicator" format="reference" />
         <attr name="sliderIndicatorSize" format="dimension" />
+        <attr name="sliderIndicatorSpacing" format="dimension" />
         <attr name="sliderMargin" format="dimension" />
         <attr name="sliderOffset" format="dimension" />
         <attr name="sliderIndicatorActiveColor" format="color" />

@@ -14,8 +14,8 @@ abstract class BaseFragment<V:ViewBinding> : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        layout = getViewBinding()
+        layout = getViewBinding(inflater, container)
         return layout.root
     }
-    abstract fun getViewBinding():V
+    abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?):V
 }
