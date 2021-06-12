@@ -122,13 +122,14 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 clipChildren = false
                 offscreenPageLimit = 3
                 if (adapter.itemCount > 1) {
-                    setCurrentItem(1,false)
-                    setCurrentItem(0,true)
+                    setCurrentItem(1, false)
+                    setCurrentItem(0, true)
                     val pageMarginPx = pageMargin
                     val offsetPx = pageOffset
                     setPageTransformer { page, position ->
+                        updatePagerHeightForChild(page, this)
                         val viewPager = page.parent.parent as ViewPager2
-                        val offset = position * - (3 * offsetPx + pageMarginPx)
+                        val offset = position * -(3 * offsetPx + pageMarginPx)
                         if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
                             if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
                                 page.translationX = -offset
@@ -151,15 +152,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                                 super.onPageSelected(position)
                                 Handler(Looper.getMainLooper()).removeCallbacks(update)
                                 currentPage = position
-                            }
-
-                            override fun onPageScrolled(
-                                position: Int,
-                                positionOffset: Float,
-                                positionOffsetPixels: Int
-                            ) {
-                                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                                recalculate(this@apply, position, positionOffset)
                             }
 
 
@@ -238,6 +230,17 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     override fun onInterceptTouchEvent(e: MotionEvent): Boolean {
         requestDisallowInterceptTouchEvent(true)
         return super.onInterceptTouchEvent(e)
+    }
+
+    private fun updatePagerHeightForChild(view: View, pager: ViewPager2) {
+        view.post {
+            val wMeasureSpec =
+                View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+            val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            view.measure(wMeasureSpec, hMeasureSpec)
+            pager.layoutParams = (pager.layoutParams).also { lp -> lp.height = view.measuredHeight }
+            pager.invalidate()
+        }
     }
 
 }
