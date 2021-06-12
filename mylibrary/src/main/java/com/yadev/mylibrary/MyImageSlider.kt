@@ -1,11 +1,14 @@
 package com.yadev.mylibrary
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.widget.FrameLayout
+import android.widget.OverScroller
 import androidx.core.view.ViewCompat
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -15,24 +18,29 @@ import com.yadev.mylibrary.adapter.BaseMyImageSliderAdapter
 import com.yadev.mylibrary.databinding.LayoutMyImageSliderBinding
 import java.util.*
 import kotlin.concurrent.timerTask
+import kotlin.math.absoluteValue
+import kotlin.math.sign
 
 
 class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
     private val layout =
         LayoutMyImageSliderBinding.inflate(LayoutInflater.from(context), this, false)
     var scrollDuration: Long
-    var autoScroll: Boolean
+    var isInfinte = true
+    var isAutoScroll = true
     var pageMargin: Int
     var pageOffset: Int
-    lateinit var update: Runnable
-
+    var timer: Timer = Timer()
+    val update: Runnable? = null
     var totalItemCount: Int = 0
+
+    private lateinit var rclv: RecyclerView
 
     init {
         addView(layout.root)
         layout.apply {
             val attr = context.obtainStyledAttributes(attrs, R.styleable.MyImageSlider)
-            autoScroll = attr.getBoolean(R.styleable.MyImageSlider_sliderAutoScroll, true)
+            isAutoScroll = attr.getBoolean(R.styleable.MyImageSlider_sliderAutoScroll, true)
             scrollDuration =
                 attr.getInt(R.styleable.MyImageSlider_sliderScrollDuration, 3000).toLong()
             val enableIndicator =
@@ -75,7 +83,8 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             springIndicator.setDotSpacing(indicatorSpacing)
             wormIndicator.setDotSpacing(indicatorSpacing)
 
-//            rclv = viewPager.getChildAt(0) as RecyclerView
+            rclv = viewPager.getChildAt(0) as RecyclerView
+            rclv.overScrollMode = OVER_SCROLL_NEVER
 
             if (!enableIndicator) {
                 wormIndicator.visibility = View.GONE
@@ -112,13 +121,14 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 clipToPadding = false
                 clipChildren = false
                 offscreenPageLimit = 3
-
                 if (adapter.itemCount > 1) {
+                    setCurrentItem(1,false)
+                    setCurrentItem(0,true)
                     val pageMarginPx = pageMargin
                     val offsetPx = pageOffset
                     setPageTransformer { page, position ->
                         val viewPager = page.parent.parent as ViewPager2
-                        val offset = position * -(3 * offsetPx + pageMarginPx)
+                        val offset = position * - (3 * offsetPx + pageMarginPx)
                         if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
                             if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
                                 page.translationX = -offset
@@ -130,35 +140,36 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                         }
                     }
 
-                    /*rclv.apply {
-                        addOnScrollListener(
-                            InfiniteScrollBehaviour(
-                                totalItemCount,
-                                layoutManager as LinearLayoutManager
-                            )
-                        )
-                    }*/
-
-                    var currentPage = currentItem
-                    registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                        override fun onPageSelected(position: Int) {
-                            super.onPageSelected(position)
-//                            handler.removeCallbacks(update)
-                            currentPage = position
-                        }
-
-                    })
-                    /*if (autoScroll) {
-                        var timer: Timer = Timer()
-                        update = Runnable {
+                    if (isAutoScroll) {
+                        var currentPage = currentItem
+                        val update = Runnable {
                             viewPager.setCurrentItem(currentPage % adapter.itemCount, true)
                             currentPage++
                         }
+                        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                            override fun onPageSelected(position: Int) {
+                                super.onPageSelected(position)
+                                Handler(Looper.getMainLooper()).removeCallbacks(update)
+                                currentPage = position
+                            }
+
+                            override fun onPageScrolled(
+                                position: Int,
+                                positionOffset: Float,
+                                positionOffsetPixels: Int
+                            ) {
+                                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                                recalculate(this@apply, position, positionOffset)
+                            }
+
+
+                        })
+
                         val timerTask = timerTask {
-                            handler.post(update)
+                            Handler(Looper.getMainLooper()).post(update)
                         }
                         timer.schedule(timerTask, scrollDuration, scrollDuration)
-                    }*/
+                    }
                     wormIndicator.setViewPager2(viewPager)
                     dotIndicator.setViewPager2(viewPager)
                     springIndicator.setViewPager2(viewPager)
@@ -173,7 +184,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         private val itemCount: Int,
         private val layoutManager: LinearLayoutManager
     ) : RecyclerView.OnScrollListener() {
-
         override fun onScrolled(
             recyclerView: RecyclerView, dx: Int, dy: Int
         ) {
@@ -196,6 +206,39 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         }
     }
 
+    private fun getMeasuredViewHeightFor(view: View): Int {
+        val wMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+        val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        view.measure(wMeasureSpec, hMeasureSpec)
+        return view.measuredHeight
+    }
+
+    fun recalculate(
+        viewPager2: ViewPager2,
+        position: Int,
+        positionOffset: Float = 0f
+    ) =
+        ((viewPager2.getChildAt(0) as? RecyclerView)?.layoutManager as? LinearLayoutManager)?.apply {
+            val leftView = findViewByPosition(position) ?: return@apply
+            val rightView = findViewByPosition(position + 1)
+            viewPager2.apply {
+                val leftHeight = getMeasuredViewHeightFor(leftView)
+                layoutParams = layoutParams.apply {
+                    height = if (rightView != null) {
+                        val rightHeight = getMeasuredViewHeightFor(rightView)
+                        leftHeight + ((rightHeight - leftHeight) * positionOffset).toInt()
+                    } else {
+                        leftHeight
+                    }
+                }
+                invalidate()
+            }
+        }
+
+    override fun onInterceptTouchEvent(e: MotionEvent): Boolean {
+        requestDisallowInterceptTouchEvent(true)
+        return super.onInterceptTouchEvent(e)
+    }
 
 }
 

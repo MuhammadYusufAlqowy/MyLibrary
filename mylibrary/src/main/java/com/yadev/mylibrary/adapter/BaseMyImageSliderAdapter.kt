@@ -33,6 +33,7 @@ abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableLis
             leftMargin = pageMargin + pageOffset
             rightMargin = pageMargin + pageOffset
         }
+
         if (itemCount > 1) {
             if (position == 0) {
                 layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {

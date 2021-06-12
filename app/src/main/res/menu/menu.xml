@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/gallery"
-        android:icon="@drawable/ic_gallery"
-        android:title="Gallery"/>
-    <item android:id="@+id/camera"
-        android:icon="@drawable/ic_camera"
-        android:title="Camera"/>
+    <item android:id="@+id/tesFragment"
+        android:title="Tes 1"
+        android:icon="@drawable/ic_info"/>
+    <item android:id="@+id/tes2Fragment"
+        android:title="Tes 2"
+        android:icon="@drawable/ic_info"/>
 </menu>
