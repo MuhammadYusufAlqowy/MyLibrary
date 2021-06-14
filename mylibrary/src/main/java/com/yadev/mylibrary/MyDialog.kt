@@ -33,9 +33,6 @@ class MyDialog {
             )
         }
 
-        fun getView() = viewBinding::getRoot
-
-
         fun setCancelable(boolean: Boolean): BuildCustomLayout {
             dialog.setCancelable(boolean)
             return this
@@ -55,8 +52,8 @@ class MyDialog {
     class Build(
         val context: Context,
         title: String? = null,
-        message: String,
-        @DrawableRes image: Int
+        message: String? = null,
+        @DrawableRes image: Int? = null
     ) {
         private var dialog = MaterialAlertDialogBuilder(context).create()
         var layout = LayoutCustomDialogBinding.inflate(LayoutInflater.from(context))
@@ -70,15 +67,21 @@ class MyDialog {
             dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             layout.apply {
                 if (title.isNullOrEmpty()) {
-                    tvTitle.visibility = View.GONE
+                    tvTitle.visibility = GONE
+                }
+                if (message.isNullOrEmpty()) {
+                    tvMessage.visibility = GONE
+                }
+                if (image == null) {
+                    imgIcon.visibility = GONE
                 }
                 tvTitle.text = title
                 tvMessage.text = message
-                imgIcon.setImageResource(image)
+                imgIcon.setImageResource(image ?: 0)
             }
         }
 
-        fun setCancelable(boolean: Boolean) : Build{
+        fun setCancelable(boolean: Boolean): Build {
             dialog.setCancelable(boolean)
             return this
         }
@@ -87,7 +90,7 @@ class MyDialog {
             layout.apply {
                 btnNegative.text = button
                 btnNegative.setOnClickListener {
-                    if (dialog.isShowing){
+                    if (dialog.isShowing) {
                         dialog.dismiss()
                     }
                     listener.onClick(it)
@@ -100,7 +103,7 @@ class MyDialog {
             layout.apply {
                 btnPositive.text = button
                 btnPositive.setOnClickListener {
-                    if (dialog.isShowing){
+                    if (dialog.isShowing) {
                         dialog.dismiss()
                     }
                     listener.onClick(it)
@@ -109,12 +112,12 @@ class MyDialog {
             return this
         }
 
-        fun show():Build{
+        fun show(): Build {
             dialog.show()
             return this
         }
 
-        fun dismiss():Build{
+        fun dismiss(): Build {
             dialog.dismiss()
             return this
         }

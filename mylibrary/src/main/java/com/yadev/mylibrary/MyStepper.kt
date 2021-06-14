@@ -21,6 +21,8 @@ class MyStepper @JvmOverloads constructor(
     var increment = 1
     var value = 0
     val valueLiveData = MutableLiveData<Int>()
+    val input = LayoutInputBinding.inflate(LayoutInflater.from(context))
+    val dialog = MyDialog.BuildCustomLayout(context, input)
     private val lifecycleRegistry = LifecycleRegistry(this)
 
     init {
@@ -97,28 +99,51 @@ class MyStepper @JvmOverloads constructor(
 
             layout.apply {
                 tvValue.setOnClickListener {
-                    val input = LayoutInputBinding.inflate(LayoutInflater.from(context))
-                    val dialog = MyDialog.BuildCustomLayout(context, input)
                     input.let {
                         dialog.show()
-                        it.tvTitle.text = dialogTitle ?: "Input"
-                        it.tilInputNumber.hint = dialogTitle ?: "Input"
-                        it.btnNegative.setOnClickListener {
-                            dialog.dismiss()
-                        }
-                        it.btnPositive.setOnClickListener {
-                            if (checkInput(input.tilInputNumber)) {
-                                value = input.tilInputNumber.editText?.text.toString().toInt()
+                        it.tvTitle.text = dialogTitle ?: "Input Number"
+                        it.tilInputNumber.hint = dialogTitle ?: "Input Number"
+                        it.btnPositive.text = "Oke"
+                        it.btnNegative.text = "Batal"
+                        it.btnPositive.setOnClickListener { v ->
+                            if (checkInput(it.tilInputNumber)) {
+                                value = it.tilInputNumber.editText?.text.toString().toInt()
                                 valueLiveData.postValue(value)
                                 dialog.dismiss()
                             }
                         }
+                        it.btnNegative.setOnClickListener {
+                            dialog.dismiss()
+                        }
                     }
-
                 }
             }
 
             attr.recycle()
+        }
+    }
+
+    fun setOnPositiveButton(button: String, onClickListener: OnClickListener) {
+        input.apply {
+            btnPositive.text = button
+            btnPositive.setOnClickListener {
+                if (checkInput(tilInputNumber)) {
+                    onClickListener.onClick(it)
+                    dialog.dismiss()
+                } else {
+                    return@setOnClickListener
+                }
+            }
+        }
+    }
+
+    fun setOnNegativeButton(button: String, onClickListener: OnClickListener? = null) {
+        input.apply {
+            btnNegative.text = button
+            btnNegative.setOnClickListener {
+                onClickListener?.onClick(it)
+                dialog.dismiss()
+            }
         }
     }
 

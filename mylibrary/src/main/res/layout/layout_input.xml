@@ -30,7 +30,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -39,31 +40,34 @@
         style="@style/MyButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/m8"
+        android:layout_marginStart="@dimen/m4"
+        android:layout_marginTop="@dimen/m8"
+        android:layout_marginEnd="@dimen/m8"
         android:text="Positive"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:backgroundTint="@color/info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnNegative"
         app:layout_constraintTop_toBottomOf="@+id/tilInputNumber"
-        app:strokeColor="@color/info" />
+        app:backgroundTint="@color/colorButton" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNegative"
-        style="@style/MyButtonStyle"
+        style="@style/MyButtonOutlineStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/m8"
+        android:layout_marginStart="@dimen/m8"
+        android:layout_marginTop="@dimen/m8"
+        android:layout_marginEnd="@dimen/m4"
         android:text="Negative"
         android:textAllCaps="false"
         android:textColor="@color/text_color"
-        app:backgroundTint="@color/disable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPositive"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilInputNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/tilInputNumber"
+        app:strokeColor="@color/colorButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

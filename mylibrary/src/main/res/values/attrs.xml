@@ -37,9 +37,12 @@
         <attr name="sliderAutoScroll" format="boolean" />
         <attr name="sliderScrollDuration" format="integer" />
         <attr name="sliderEnableIndicator" format="boolean" />
-        <attr name="sliderIndicator" format="reference" />
+        <attr name="sliderIndicatorPaddingStart" format="dimension" />
+        <attr name="sliderIndicatorPaddingEnd" format="dimension" />
+        <attr name="sliderIndicatorPaddingBottom" format="dimension" />
         <attr name="sliderIndicatorSize" format="dimension" />
         <attr name="sliderIndicatorSpacing" format="dimension" />
+        <attr name="sliderMinHeight" format="dimension" />
         <attr name="sliderMargin" format="dimension" />
         <attr name="sliderOffset" format="dimension" />
         <attr name="sliderIndicatorActiveColor" format="color" />
@@ -48,6 +51,12 @@
             <enum name="dot" value="0" />
             <enum name="spring" value="1" />
             <enum name="worm" value="2" />
+        </attr>
+        <attr name="sliderIndicatorPosition" format="enum">
+            <enum name="bellow" value="0" />
+            <enum name="insideStart" value="1" />
+            <enum name="insideCenter" value="2" />
+            <enum name="insideEnd" value="3" />
         </attr>
 
     </declare-styleable>

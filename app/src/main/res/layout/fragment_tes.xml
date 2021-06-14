@@ -96,8 +96,10 @@
                 app:sliderIndicatorDisableColor="@color/gray"
                 app:sliderIndicatorSize="@dimen/m7"
                 app:sliderIndicatorType="dot"
-                app:sliderMargin="@dimen/m4"
-                app:sliderOffset="@dimen/m16"
+                app:sliderAutoScroll="false"
+                app:sliderIndicatorPosition="insideEnd"
+                app:sliderMargin="@dimen/m8"
+                app:sliderOffset="@dimen/m8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

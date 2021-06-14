@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,17 +14,19 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100adp"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
             android:id="@+id/lIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_4adp"
-            android:gravity="center">
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
             <com.yadev.mylibrary.Indicator.WormsIndicator
                 android:id="@+id/wormIndicator"
                 android:layout_width="wrap_content"
@@ -36,8 +38,8 @@
                 android:id="@+id/springIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:dotsSpacing="@dimen/_2adp"
-                app:dotsSize="@dimen/_7adp"/>
+                app:dotsSize="@dimen/_7adp"
+                app:dotsSpacing="@dimen/_2adp" />
 
             <com.yadev.mylibrary.Indicator.DotsIndicator
                 android:id="@+id/dotIndicator"
@@ -48,6 +50,6 @@
         </LinearLayout>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

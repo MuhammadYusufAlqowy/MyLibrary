@@ -12,7 +12,6 @@ abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableLis
     var pageOffset: Int = 0
     var fakeList = mutableListOf(list.last()) + list + mutableListOf(list.last())
     var maxHeight = 0
-    lateinit var rclv: RecyclerView
 
     lateinit var layout: V
 
@@ -33,38 +32,10 @@ abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableLis
             rightMargin = pageMargin + pageOffset
         }
 
-        if (itemCount > 1) {
-            when (position) {
-                0 -> {
-                    layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                        leftMargin = pageMargin
-                        rightMargin = (pageMargin + (2 * pageOffset))
-                    }
-                }
-
-                itemCount - 1 -> {
-                    layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                        leftMargin = (pageMargin + (2 * pageOffset))
-                        rightMargin = pageMargin
-                    }
-                }
-            }
-
-        }else{
-            layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = pageMargin
-                rightMargin = pageMargin
-            }
-        }
         bind(item, layout)
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        rclv = recyclerView
     }
 }

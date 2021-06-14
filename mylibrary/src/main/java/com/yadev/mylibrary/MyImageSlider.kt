@@ -1,10 +1,12 @@
 package com.yadev.mylibrary
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import com.yadev.mylibrary.adapter.BaseMyImageSliderAdapter
 import com.yadev.mylibrary.databinding.LayoutMyImageSliderBinding
 import java.util.*
+import kotlin.concurrent.timerTask
 
 
 class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -28,6 +31,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     var timer: Timer = Timer()
     val update: Runnable? = null
     var totalItemCount: Int = 0
+    var sliderMinHeight: Int = 0
 
     private lateinit var rclv: RecyclerView
 
@@ -41,9 +45,27 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             val enableIndicator =
                 attr.getBoolean(R.styleable.MyImageSlider_sliderEnableIndicator, true)
             val indicatorStyle = attr.getInt(R.styleable.MyImageSlider_sliderIndicatorType, 0)
+            val indicatorPaddingStart = attr.getDimensionPixelSize(
+                R.styleable.MyImageSlider_sliderIndicatorPaddingStart,
+                resources.getDimensionPixelSize(R.dimen._4adp)
+            )
+            val indicatorPaddingEnd = attr.getDimensionPixelSize(
+                R.styleable.MyImageSlider_sliderIndicatorPaddingEnd,
+                resources.getDimensionPixelSize(R.dimen._4adp)
+            )
+            val indicatorPaddingBottom = attr.getDimensionPixelSize(
+                R.styleable.MyImageSlider_sliderIndicatorPaddingBottom,
+                resources.getDimensionPixelSize(R.dimen._4adp)
+            )
+            val indicatorPosition =
+                attr.getInt(R.styleable.MyImageSlider_sliderIndicatorPosition, 0)
             val indicatorSize = attr.getDimension(
                 R.styleable.MyImageSlider_sliderIndicatorSize,
                 resources.getDimension(R.dimen._7adp)
+            )
+            sliderMinHeight = attr.getDimensionPixelSize(
+                R.styleable.MyImageSlider_sliderMinHeight,
+                0
             )
             val indicatorSpacing = attr.getDimension(
                 R.styleable.MyImageSlider_sliderIndicatorSpacing,
@@ -80,14 +102,32 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
             rclv = viewPager.getChildAt(0) as RecyclerView
             rclv.overScrollMode = OVER_SCROLL_NEVER
-            viewPager.updateLayoutParams {
-                height = 120.toDp()
+            if (sliderMinHeight > 0) {
+                viewPager.updateLayoutParams {
+                    height = sliderMinHeight
+                }
             }
 
+            lIndicator.setPadding(
+                indicatorPaddingStart,
+                0,
+                indicatorPaddingEnd,
+                indicatorPaddingBottom
+            )
+
             if (!enableIndicator) {
-                wormIndicator.visibility = View.GONE
-                dotIndicator.visibility = View.GONE
-                springIndicator.visibility = View.GONE
+                lIndicator.visibility = GONE
+            }
+
+            when (indicatorPosition) {
+                0 -> {
+                    lIndicator.updateLayoutParams<RelativeLayout.LayoutParams> {
+                        addRule(RelativeLayout.BELOW, viewPager.id)
+                    }
+                }
+                1 -> lIndicator.gravity = Gravity.START
+                2 -> lIndicator.gravity = Gravity.CENTER
+                3 -> lIndicator.gravity = Gravity.END
             }
 
             when (indicatorStyle) {
@@ -105,7 +145,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 }
             }
             viewPager.updateLayoutParams {
-                height = resources.getDimensionPixelSize(R.dimen._120adp)
+                height = sliderMinHeight
             }
             attr.recycle()
         }
@@ -114,42 +154,46 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     fun <T, V : ViewBinding> setAdapter(adapter: BaseMyImageSliderAdapter<T, V>): BaseMyImageSliderAdapter<T, V> {
         layout.apply {
             viewPager.apply {
-                adapter.pageOffset = pageOffset
-                adapter.pageMargin = pageMargin
                 setAdapter(adapter)
                 totalItemCount = adapter.itemCount
-//                orientation = ORIENTATION_HORIZONTAL
+                orientation = ORIENTATION_HORIZONTAL
                 clipToPadding = false
                 clipChildren = false
                 offscreenPageLimit = 3
                 if (adapter.itemCount > 1) {
-                    setCurrentItem(1, false)
-                    setCurrentItem(0, true)
+                    if (pageOffset > 0 || pageMargin > 0) {
+                        adapter.pageOffset = pageOffset
+                        adapter.pageMargin = pageMargin
+                        setCurrentItem(1, false)
+                        setCurrentItem(0, true)
 
-                    val pageMarginPx = pageMargin
-                    val offsetPx = pageOffset
-                    Log.wtf("MARGIN: ", "$pageMarginPx \nOFFSET:$pageOffset")
-                    setPageTransformer { page, position ->
-                        updatePagerHeightForChild(page, this)
-                        val viewPager = page.parent.parent as ViewPager2
-                        var offset = position * -(2 * offsetPx + pageMarginPx)
-                        if (currentItem == 0 && offset <= currentItem + 1 * -(2 * offsetPx + pageMarginPx).toFloat()) offset =
-                            position * -(3 * offsetPx + pageMarginPx).toFloat()
+                        val pageMarginPx = pageMargin
+                        val offsetPx = pageOffset
+                        setPageTransformer { page, position ->
+                            updatePagerHeightForChild(page, this)
+                            val viewPager = page.parent.parent as ViewPager2
+                            var offset = position * -(2 * offsetPx + pageMarginPx)
+                            if (currentItem == 0 && position == 0f) offset = -offsetPx.toFloat()
+                            if (currentItem == 0 && position == 1f) offset =
+                                position * -(3 * offsetPx + pageMarginPx)
+                            if (currentItem == totalItemCount - 1 && position == -1f) offset =
+                                position * -(3 * offsetPx + pageMarginPx)
+                            if (currentItem == totalItemCount - 1 && position == 0f) offset =
+                                offsetPx.toFloat()
 
-                        Log.wtf("POS", position.toString())
-                        Log.wtf("OFF", offset.toString())
-                        if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
-                            if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                                page.translationX = -offset
+                            if (viewPager.orientation == ORIENTATION_HORIZONTAL) {
+                                if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                                    page.translationX = -offset
+                                } else {
+                                    page.translationX = offset
+                                }
                             } else {
-                                page.translationX = offset
+                                page.translationY = offset
                             }
-                        } else {
-                            page.translationY = offset
                         }
                     }
 
-                    /*if (isAutoScroll) {
+                    if (isAutoScroll) {
                         var currentPage = currentItem
                         val update = Runnable {
                             viewPager.setCurrentItem(currentPage % adapter.itemCount, true)
@@ -167,7 +211,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                             Handler(Looper.getMainLooper()).post(update)
                         }
                         timer.schedule(timerTask, scrollDuration, scrollDuration)
-                    }*/
+                    }
                     wormIndicator.setViewPager2(viewPager)
                     dotIndicator.setViewPager2(viewPager)
                     springIndicator.setViewPager2(viewPager)
@@ -213,23 +257,25 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
     fun recalculate(
         viewPager2: ViewPager2,
-        position: Int,
-        positionOffset: Float = 0f
+        position: Int
     ) =
         ((viewPager2.getChildAt(0) as? RecyclerView)?.layoutManager as? LinearLayoutManager)?.apply {
             val leftView = findViewByPosition(position) ?: return@apply
             val rightView = findViewByPosition(position + 1)
             viewPager2.apply {
                 val leftHeight = getMeasuredViewHeightFor(leftView)
-                layoutParams = layoutParams.apply {
-                    height = if (rightView != null) {
-                        val rightHeight = getMeasuredViewHeightFor(rightView)
-                        leftHeight + ((rightHeight - leftHeight) * positionOffset).toInt()
-                    } else {
-                        leftHeight
+                val measureHeight = if (rightView != null) {
+                    val rightHeight = getMeasuredViewHeightFor(rightView)
+                    leftHeight + ((rightHeight - leftHeight) * 0f).toInt()
+                } else {
+                    leftHeight
+                }
+                if (viewPager2.height > measureHeight) {
+                    layoutParams = layoutParams.apply {
+                        height = measureHeight
+                        invalidate()
                     }
                 }
-                invalidate()
             }
         }
 
@@ -244,11 +290,22 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
             val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
             view.measure(wMeasureSpec, hMeasureSpec)
-            if (pager.height > view.measuredHeight) {
+            if (sliderMinHeight <= 0) {
                 pager.layoutParams =
                     (pager.layoutParams).also { lp -> lp.height = view.measuredHeight }
                 pager.invalidate()
+            } else {
+                if (pager.height > view.measuredHeight) {
+                    pager.layoutParams =
+                        (pager.layoutParams).also { lp -> lp.height = view.measuredHeight }
+                    pager.invalidate()
+                } else if ((view.measuredHeight / pager.height) <= 1) {
+                    pager.layoutParams =
+                        (pager.layoutParams).also { lp -> lp.height = view.measuredHeight }
+                    pager.invalidate()
+                }
             }
+
         }
     }
 
