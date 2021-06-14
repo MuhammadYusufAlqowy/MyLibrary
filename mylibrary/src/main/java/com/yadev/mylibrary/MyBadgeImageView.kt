@@ -42,9 +42,9 @@ class MyBadgeImageView(context: Context, attrs: AttributeSet) : FrameLayout(cont
                 layout.tvBadge.text = "99+"
             }
             if (badgeNumber == 0){
-                layout.tvBadge.visibility = View.GONE
+                layout.tvBadge.visibility = INVISIBLE
             }else{
-                layout.tvBadge.visibility = View.VISIBLE
+                layout.tvBadge.visibility = VISIBLE
             }
 
             attr.recycle()

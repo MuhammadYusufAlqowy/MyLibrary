@@ -37,9 +37,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
-import com.bumptech.glide.load.resource.bitmap.FitCenter
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.bitmap.*
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.google.android.gms.common.api.ApiException
@@ -649,22 +647,33 @@ fun View.setPaddingVertical(padding: Int) {
 fun ImageView.setImageUrl(
     url: String,
     key: String? = "",
-    type: BitmapTransformation = FIT_CENTER,
+    type: MyBitmapTransformation = MyBitmapTransformation.FIT_CENTER,
     roundedCorner: Int = 1,
-    cacheStrategy: DiskCacheStrategy = DiskCacheStrategy.ALL,
-    @DrawableRes errorDrawable: Int = R.drawable.ic_error_cloud
+    cacheStrategy: MyDiskCacheStrategy = MyDiskCacheStrategy.ALL,
+//    @DrawableRes errorDrawable: Int = R.drawable.ic_error_cloud
 ) {
+    var bitmapTransformation: BitmapTransformation = when (type) {
+        is MyBitmapTransformation.FIT_CENTER -> FitCenter()
+        is MyBitmapTransformation.CENTER_CROP -> CenterCrop()
+        is MyBitmapTransformation.CENTER_INSIDE -> CenterInside()
+        is MyBitmapTransformation.CIRCLE_CROP -> CircleCrop()
+    }
+    var diskCacheStrategy = when (cacheStrategy) {
+        is MyDiskCacheStrategy.ALL -> DiskCacheStrategy.ALL
+        is MyDiskCacheStrategy.NONE -> DiskCacheStrategy.NONE
+        is MyDiskCacheStrategy.AUTO -> DiskCacheStrategy.AUTOMATIC
+    }
     val circularProgressDrawable = CircularProgressDrawable(this.context)
     circularProgressDrawable.strokeWidth = 4f
     circularProgressDrawable.centerRadius = 25f
     circularProgressDrawable.start()
     Glide.with(this.context.applicationContext).load(url)
         .apply(
-            RequestOptions().transform(type, RoundedCorners(roundedCorner))
-                .diskCacheStrategy(cacheStrategy)
+            RequestOptions().transform(bitmapTransformation, RoundedCorners(roundedCorner))
+                .diskCacheStrategy(diskCacheStrategy)
                 .signature(ObjectKey(key!!))
         ).placeholder(circularProgressDrawable)
-        .error(errorDrawable)
+//        .error(errorDrawable)
         .into(this)
 }
 
@@ -674,7 +683,7 @@ fun ImageView.setImageBase64(
     type: BitmapTransformation,
     roundedCorner: Int = 0,
     cacheStrategy: DiskCacheStrategy = DiskCacheStrategy.ALL,
-    @DrawableRes errorDrawable: Int
+//    @DrawableRes errorDrawable: Int
 ) {
     val circularProgressDrawable = CircularProgressDrawable(this.context)
     circularProgressDrawable.strokeWidth = 4f
@@ -687,6 +696,13 @@ fun ImageView.setImageBase64(
                 .signature(ObjectKey(key))
         )
         .placeholder(circularProgressDrawable)
-        .error(errorDrawable)
+//        .error(errorDrawable)
         .into(this)
+}
+
+fun View.getMeasuredViewHeight(): Int {
+    val wMeasureSpec = View.MeasureSpec.makeMeasureSpec(this.width, View.MeasureSpec.EXACTLY)
+    val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+    this.measure(wMeasureSpec, hMeasureSpec)
+    return this.measuredHeight
 }

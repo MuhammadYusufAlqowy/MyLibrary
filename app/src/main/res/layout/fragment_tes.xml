@@ -102,8 +102,7 @@
                 android:layout_height="wrap_content" />
 
             <com.yadev.mylibrary.MyStepper
-                app:stepMaxValue="11"
-                app:stepMinValue="2"
+                android:id="@+id/stepper"
                 app:stepValueIncrement="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

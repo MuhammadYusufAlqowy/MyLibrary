@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<V:ViewBinding> : Fragment(){
-    companion object{
-        const val GONE = View.GONE
-        const val VISIBLE = View.VISIBLE
-    }
+
     lateinit var layout:V
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -2,18 +2,17 @@ package com.yadev.mylibrary.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.yadev.mylibrary.toDp
-import com.yadev.mylibrary.toPx
 
 abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableList<T>) :
     RecyclerView.Adapter<BaseMyImageSliderAdapter.ViewHolder>() {
     var pageMargin: Int = 0
     var pageOffset: Int = 0
     var fakeList = mutableListOf(list.last()) + list + mutableListOf(list.last())
+    var maxHeight = 0
+    lateinit var rclv: RecyclerView
 
     lateinit var layout: V
 
@@ -35,18 +34,22 @@ abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableLis
         }
 
         if (itemCount > 1) {
-            if (position == 0) {
-                layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    leftMargin = pageMargin
-                    rightMargin = (pageMargin + (2 * pageOffset))
+            when (position) {
+                0 -> {
+                    layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                        leftMargin = pageMargin
+                        rightMargin = (pageMargin + (2 * pageOffset))
+                    }
+                }
+
+                itemCount - 1 -> {
+                    layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                        leftMargin = (pageMargin + (2 * pageOffset))
+                        rightMargin = pageMargin
+                    }
                 }
             }
-            if (position == itemCount - 1) {
-                layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    leftMargin = (pageMargin + (2 * pageOffset))
-                    rightMargin = pageMargin
-                }
-            }
+
         }else{
             layout.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = pageMargin
@@ -58,5 +61,10 @@ abstract class BaseMyImageSliderAdapter<T, V : ViewBinding>(val list: MutableLis
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        rclv = recyclerView
     }
 }

@@ -70,7 +70,14 @@ class TesFragment : BaseFragment<FragmentTesBinding>() {
                     pickImage(requireActivity(), image)
                 }
 
-                image.setImageUrl("https://paketnasi.co.id/uploads/user/slider/19.png")
+                stepper.getValueChangeListener {
+                    root.snackInfo(it.toString())
+                }
+                image.setImageUrl(
+                    "https://paketnasi.co.id/uploads/user/slider/19.png",
+                    type = MyBitmapTransformation.CENTER_INSIDE,
+                    cacheStrategy = MyDiskCacheStrategy.NONE
+                )
             }
         }
     }

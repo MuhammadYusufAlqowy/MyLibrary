@@ -5,13 +5,59 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.annotation.DrawableRes
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yadev.mylibrary.databinding.LayoutCustomDialogBinding
 
 class MyDialog {
-    class Build(val context: Context, title: String? = null, message: String, @DrawableRes image: Int) {
+
+    class BuildCustomLayout(val context: Context, val viewBinding: ViewBinding) {
+        private var dialog = MaterialAlertDialogBuilder(context).create()
+        private var layout = LayoutCustomDialogBinding.inflate(LayoutInflater.from(context))
+
+        init {
+            dialog.setView(layout.root)
+            layout.baseLayout.visibility = GONE
+            layout.customLayout.visibility = VISIBLE
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            val param = dialog.window?.attributes
+            param?.dimAmount = 0.5f
+            dialog.window?.attributes = param
+            dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            layout.customLayout.addView(
+                viewBinding.root,
+                ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            )
+        }
+
+        fun getView() = viewBinding::getRoot
+
+
+        fun setCancelable(boolean: Boolean): BuildCustomLayout {
+            dialog.setCancelable(boolean)
+            return this
+        }
+
+        fun show(): BuildCustomLayout {
+            dialog.show()
+            return this
+        }
+
+        fun dismiss(): BuildCustomLayout {
+            dialog.dismiss()
+            return this
+        }
+    }
+
+    class Build(
+        val context: Context,
+        title: String? = null,
+        message: String,
+        @DrawableRes image: Int
+    ) {
         private var dialog = MaterialAlertDialogBuilder(context).create()
         var layout = LayoutCustomDialogBinding.inflate(LayoutInflater.from(context))
 

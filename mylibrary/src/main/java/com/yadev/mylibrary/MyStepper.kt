@@ -2,7 +2,6 @@ package com.yadev.mylibrary
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.*
+import com.yadev.mylibrary.databinding.LayoutInputBinding
 import com.yadev.mylibrary.databinding.LayoutStepperBinding
 
 class MyStepper @JvmOverloads constructor(
@@ -49,6 +49,7 @@ class MyStepper @JvmOverloads constructor(
                 R.styleable.MyStepper_stepValueSize,
                 resources.getDimension(R.dimen.t11)
             )
+            val dialogTitle = attr.getString(R.styleable.MyStepper_stepDialogTitle)
             btnMin.setImageResource(drawableMin)
             btnPlus.setImageResource(drawablePlus)
             btnMin.updateLayoutParams<ViewGroup.LayoutParams> {
@@ -89,8 +90,31 @@ class MyStepper @JvmOverloads constructor(
             layout.apply {
                 btnMin.setOnClickListener {
                     value -= increment
-                    if (value<=min) value = min
+                    if (value <= min) value = min
                     valueLiveData.postValue(value)
+                }
+            }
+
+            layout.apply {
+                tvValue.setOnClickListener {
+                    val input = LayoutInputBinding.inflate(LayoutInflater.from(context))
+                    val dialog = MyDialog.BuildCustomLayout(context, input)
+                    input.let {
+                        dialog.show()
+                        it.tvTitle.text = dialogTitle ?: "Input"
+                        it.tilInputNumber.hint = dialogTitle ?: "Input"
+                        it.btnNegative.setOnClickListener {
+                            dialog.dismiss()
+                        }
+                        it.btnPositive.setOnClickListener {
+                            if (checkInput(input.tilInputNumber)) {
+                                value = input.tilInputNumber.editText?.text.toString().toInt()
+                                valueLiveData.postValue(value)
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+
                 }
             }
 
@@ -98,25 +122,7 @@ class MyStepper @JvmOverloads constructor(
         }
     }
 
-    fun setButtonPlusOnClickListener(listener: OnClickListener) {
-        layout.apply {
-            btnPlus.setOnClickListener {
-                value += increment
-                valueLiveData.postValue(value)
-                listener.onClick(it)
-            }
-        }
-    }
-
-    fun setButtonMinusOnClickListener(listener: OnClickListener) {
-        layout.apply {
-            btnMin.setOnClickListener {
-                value -= increment
-                valueLiveData.postValue(value)
-                listener.onClick(it)
-            }
-        }
-    }
+    fun getValueChangeListener(observer: Observer<Int>) = valueLiveData.observe(this, observer)
 
     override fun getLifecycle() = lifecycleRegistry
 

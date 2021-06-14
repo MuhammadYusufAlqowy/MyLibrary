@@ -1,15 +1,28 @@
 package com.yadev.mylibrary
 
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.FitCenter
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
-
-val CENTER_CROP = CenterCrop()
-val CENTER_INSIDE = CenterInside()
-val FIT_CENTER = FitCenter()
-val CIRCLE_CROP = CircleCrop()
+const val WRAP_CONTENT = ViewGroup.LayoutParams.WRAP_CONTENT
+const val MATCH_PARENT = ViewGroup.LayoutParams.MATCH_PARENT
 const val GALLERY = 1
 const val CAMERA = 2
 const val DEFAULT = 0
+const val GONE = View.GONE
+const val VISIBLE = View.VISIBLE
+const val VERTICAL = RecyclerView.VERTICAL
+const val HORIZONTAL = RecyclerView.HORIZONTAL
+
+sealed class MyBitmapTransformation {
+    object FIT_CENTER : MyBitmapTransformation()
+    object CENTER_CROP : MyBitmapTransformation()
+    object CENTER_INSIDE : MyBitmapTransformation()
+    object CIRCLE_CROP : MyBitmapTransformation()
+}
+
+sealed class MyDiskCacheStrategy {
+    object ALL : MyDiskCacheStrategy()
+    object NONE : MyDiskCacheStrategy()
+    object AUTO : MyDiskCacheStrategy()
+}

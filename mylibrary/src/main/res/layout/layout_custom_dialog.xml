@@ -10,7 +10,14 @@
         android:layout_margin="@dimen/_8adp"
         app:cardCornerRadius="@dimen/r8">
 
+        <RelativeLayout
+            android:id="@+id/customLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baseLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/m8">
@@ -79,7 +86,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvMessage" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
