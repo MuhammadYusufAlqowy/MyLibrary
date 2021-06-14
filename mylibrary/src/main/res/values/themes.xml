@@ -46,7 +46,7 @@
         <item name="suffixTextAppearance">@style/InputTextApperance</item>
         <item name="helperTextTextAppearance">@style/InfoTextApperance</item>
         <item name="errorTextAppearance">@style/InfoTextApperance</item>
-        <item name="boxCollapsedPaddingTop">@dimen/m2</item>
+        <item name="boxCollapsedPaddingTop">@dimen/_1adp</item>
         <item name="android:textSize">@dimen/t11</item>
     </style>
 
@@ -63,7 +63,7 @@
         <item name="suffixTextAppearance">@style/InputTextApperance</item>
         <item name="helperTextTextAppearance">@style/InfoTextApperance</item>
         <item name="errorTextAppearance">@style/InfoTextApperance</item>
-        <item name="boxCollapsedPaddingTop">@dimen/m2</item>
+        <item name="boxCollapsedPaddingTop">@dimen/_1adp</item>
         <item name="android:textSize">@dimen/t11</item>
     </style>
     <style name="TabTextApperance" parent="TextAppearance.AppCompat">
@@ -83,14 +83,14 @@
         <item name="textAllCaps">false</item>
         <item name="android:textSize">@dimen/t11</item>
         <item name="android:textStyle">bold</item>
-        <item name="cornerRadius">@dimen/r4</item>
+        <item name="cornerRadius">@dimen/r8</item>
     </style>
 
     <style name="MyButtonOutlineStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">@dimen/t11</item>
         <item name="android:textStyle">bold</item>
-        <item name="cornerRadius">@dimen/r4</item>
+        <item name="cornerRadius">@dimen/r8</item>
     </style>
 
 </resources>
