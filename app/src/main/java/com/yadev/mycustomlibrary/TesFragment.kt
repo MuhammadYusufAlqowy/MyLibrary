@@ -1,23 +1,13 @@
 package com.yadev.mycustomlibrary
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.yadev.mycustomlibrary.databinding.FragmentTesBinding
 import com.yadev.mylibrary.*
 import com.yadev.mylibrary.fragment.BaseFragment
 
 class TesFragment : BaseFragment<FragmentTesBinding>() {
-    override fun getViewBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentTesBinding {
-        return FragmentTesBinding.inflate(inflater, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setup() {
         layout.apply {
             layout.apply {
                 btn1.setOnClickListener {
@@ -80,6 +70,13 @@ class TesFragment : BaseFragment<FragmentTesBinding>() {
                 )
             }
         }
+    }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentTesBinding {
+        return FragmentTesBinding.inflate(inflater, container, false)
     }
 
 }

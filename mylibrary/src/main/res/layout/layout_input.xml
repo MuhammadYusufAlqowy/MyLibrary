@@ -63,7 +63,7 @@
         android:layout_marginEnd="@dimen/m4"
         android:text="Negative"
         android:textAllCaps="false"
-        android:textColor="@color/text_color"
+        android:textColor="@color/colorButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPositive"
         app:layout_constraintHorizontal_bias="0.5"

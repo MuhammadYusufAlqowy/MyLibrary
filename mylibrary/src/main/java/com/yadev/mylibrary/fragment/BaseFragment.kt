@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<V:ViewBinding> : Fragment(){
-
-    lateinit var layout:V
+    lateinit var layout: V
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -18,5 +17,12 @@ abstract class BaseFragment<V:ViewBinding> : Fragment(){
         layout = getViewBinding(inflater, container)
         return layout.root
     }
-    abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?):V
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setup()
+    }
+
+    abstract fun setup()
+    abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): V
 }

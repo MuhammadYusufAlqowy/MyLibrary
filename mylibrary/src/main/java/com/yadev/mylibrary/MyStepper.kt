@@ -103,6 +103,7 @@ class MyStepper @JvmOverloads constructor(
                         dialog.show()
                         it.tvTitle.text = dialogTitle ?: "Input Number"
                         it.tilInputNumber.hint = dialogTitle ?: "Input Number"
+                        it.tilInputNumber.editText?.setText(value.toString())
                         it.btnPositive.text = "Oke"
                         it.btnNegative.text = "Batal"
                         it.btnPositive.setOnClickListener { v ->
@@ -126,6 +127,7 @@ class MyStepper @JvmOverloads constructor(
     fun setOnPositiveButton(button: String, onClickListener: OnClickListener) {
         input.apply {
             btnPositive.text = button
+            tilInputNumber.editText?.setText(value.toString())
             btnPositive.setOnClickListener {
                 if (checkInput(tilInputNumber)) {
                     onClickListener.onClick(it)
