@@ -20,9 +20,9 @@ abstract class BaseFragment<V:ViewBinding> : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setup()
+        onSetup()
     }
 
-    abstract fun setup()
+    abstract fun onSetup()
     abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): V
 }

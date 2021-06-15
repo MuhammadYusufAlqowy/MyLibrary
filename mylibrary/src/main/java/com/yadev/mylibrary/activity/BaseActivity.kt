@@ -3,9 +3,7 @@ package com.yadev.mylibrary.activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.yadev.mylibrary.R
@@ -13,22 +11,19 @@ import com.yadev.mylibrary.hideSoftKeyboard
 import com.yadev.mylibrary.makeStatusBarTransparent
 
 abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean) : AppCompatActivity(){
-    companion object{
-        const val VISIBLE = View.VISIBLE
-        const val GONE = View.GONE
-    }
     lateinit var layout : V
     private var dispatch = false
     private var fontScale = false
+    abstract fun onSetup()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (fullScreen){
+        if (fullScreen) {
             setTheme(R.style.FullScreen)
             makeStatusBarTransparent()
         }
         layout = getBindingView()
         setContentView(layout.root)
-
+        onSetup()
     }
     abstract fun getBindingView() : V
 

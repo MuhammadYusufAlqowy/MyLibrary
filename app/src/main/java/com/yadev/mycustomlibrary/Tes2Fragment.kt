@@ -7,7 +7,7 @@ import com.yadev.mylibrary.adapter.ViewPager2FragmentAdapter
 import com.yadev.mylibrary.fragment.BaseFragment
 
 class Tes2Fragment : BaseFragment<FragmentTes2Binding>() {
-    override fun setup() {
+    override fun onSetup() {
         layout.apply {
             val adapter = ViewPager2FragmentAdapter(requireActivity())
             adapter.setUp(mutableListOf(TesFragment(), TesFragment()))

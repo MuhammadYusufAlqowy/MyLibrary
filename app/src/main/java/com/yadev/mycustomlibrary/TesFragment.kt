@@ -7,7 +7,7 @@ import com.yadev.mylibrary.*
 import com.yadev.mylibrary.fragment.BaseFragment
 
 class TesFragment : BaseFragment<FragmentTesBinding>() {
-    override fun setup() {
+    override fun onSetup() {
         layout.apply {
             layout.apply {
                 btn1.setOnClickListener {
