@@ -38,6 +38,7 @@
         <attr name="sliderScrollDuration" format="integer" />
         <attr name="sliderEnableIndicator" format="boolean" />
         <attr name="sliderIndicatorPaddingStart" format="dimension" />
+        <attr name="sliderIndicatorPaddingTop" format="dimension" />
         <attr name="sliderIndicatorPaddingEnd" format="dimension" />
         <attr name="sliderIndicatorPaddingBottom" format="dimension" />
         <attr name="sliderIndicatorSize" format="dimension" />

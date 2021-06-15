@@ -57,6 +57,11 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 R.styleable.MyImageSlider_sliderIndicatorPaddingBottom,
                 resources.getDimensionPixelSize(R.dimen._4adp)
             )
+            val indicatorPaddingTop = attr.getDimensionPixelSize(
+                R.styleable.MyImageSlider_sliderIndicatorPaddingTop,
+                resources.getDimensionPixelSize(R.dimen._4adp)
+            )
+
             val indicatorPosition =
                 attr.getInt(R.styleable.MyImageSlider_sliderIndicatorPosition, 0)
             val indicatorSize = attr.getDimension(
@@ -110,7 +115,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
             lIndicator.setPadding(
                 indicatorPaddingStart,
-                0,
+                indicatorPaddingTop,
                 indicatorPaddingEnd,
                 indicatorPaddingBottom
             )
