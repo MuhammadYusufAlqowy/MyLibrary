@@ -9,7 +9,7 @@ import com.yadev.mylibrary.setImageUrl
 
 class adaptertes : BaseMyImageSliderAdapter<String, LayoutTesBinding>(
     mutableListOf(
-        "https://paketnasi.co.id/uploads/user/slider/19.png",
+        "https://paketnasi.co.id/uploads/user/banner_kotak/133.png",
         "https://paketnasi.co.id/uploads/user/slider/20.png",
         "https://paketnasi.co.id/uploads/user/slider/19.png",
         "https://paketnasi.co.id/uploads/user/slider/21.png"

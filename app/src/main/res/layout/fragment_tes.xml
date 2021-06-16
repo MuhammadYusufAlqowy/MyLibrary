@@ -97,7 +97,7 @@
                 app:sliderIndicatorSize="@dimen/m7"
                 app:sliderIndicatorType="dot"
                 app:sliderAutoScroll="false"
-                app:sliderIndicatorPosition="insideEnd"
+                app:sliderMinHeight="150dp"
                 app:sliderMargin="@dimen/m8"
                 app:sliderOffset="@dimen/m8"
                 android:layout_width="match_parent"

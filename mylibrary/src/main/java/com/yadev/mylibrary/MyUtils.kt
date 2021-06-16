@@ -314,7 +314,6 @@ interface LocationListener {
 class MyLocation(val context: Context, val listener: LocationListener) {
 
     fun getLastLocation() {
-
         Dexter.withContext(context)
             .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             .withListener(object : PermissionListener {
@@ -348,7 +347,7 @@ class MyLocation(val context: Context, val listener: LocationListener) {
                     if (response.isPermanentlyDenied) {
                         val dialog = MaterialAlertDialogBuilder(context)
                         dialog.setTitle("Ijin Lokasi")
-                        dialog.setMessage("Aplikasi membutuhkan akses lokasi saat ini untuk melihat penawaran menu di lokasi anda.\\nSilahkan aktifkan lokasi secara manual melalui pengaturan aplikasi.")
+                        dialog.setMessage("Aplikasi membutuhkan akses lokasi saat ini.\nSilahkan aktifkan lokasi secara manual melalui pengaturan aplikasi.")
                         dialog.setPositiveButton("Buka Pengaturan") { d, v ->
                             openSettings()
                             d.dismiss()

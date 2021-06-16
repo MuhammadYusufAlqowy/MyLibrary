@@ -82,7 +82,6 @@
                 android:layout_marginStart="@dimen/m8"
                 android:layout_marginTop="@dimen/m8"
                 android:layout_marginEnd="@dimen/m4"
-                app:backgroundTint="@color/disable"
                 android:text="Negative"
                 android:textColor="@color/colorButton"
                 app:strokeColor="@color/colorButton"

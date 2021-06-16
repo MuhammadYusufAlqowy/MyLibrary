@@ -175,7 +175,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                         val pageMarginPx = pageMargin
                         val offsetPx = pageOffset
                         setPageTransformer { page, position ->
-                            updatePagerHeightForChild(page, this)
+                            updatePagerHeightForChild(page, this, sliderMinHeight)
                             val viewPager = page.parent.parent as ViewPager2
                             var offset = position * -(2 * offsetPx + pageMarginPx)
                             if (currentItem == 0 && position == 0f) offset = -offsetPx.toFloat()
@@ -289,7 +289,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         return super.onInterceptTouchEvent(e)
     }
 
-    private fun updatePagerHeightForChild(view: View, pager: ViewPager2) {
+    private fun updatePagerHeightForChild(view: View, pager: ViewPager2, sliderMinHeight: Int) {
         view.post {
             val wMeasureSpec =
                 View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
@@ -304,7 +304,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                     pager.layoutParams =
                         (pager.layoutParams).also { lp -> lp.height = view.measuredHeight }
                     pager.invalidate()
-                } else if ((view.measuredHeight / pager.height) <= 1) {
+                } else if ((view.measuredHeight / pager.height).toFloat() <= 1.2) {
                     pager.layoutParams =
                         (pager.layoutParams).also { lp -> lp.height = view.measuredHeight }
                     pager.invalidate()
