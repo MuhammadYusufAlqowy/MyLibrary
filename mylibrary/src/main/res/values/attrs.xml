@@ -48,6 +48,7 @@
         <attr name="sliderOffset" format="dimension" />
         <attr name="sliderIndicatorActiveColor" format="color" />
         <attr name="sliderIndicatorDisableColor" format="color" />
+        <attr name="sliderDisallowIntercept" format="boolean" />
         <attr name="sliderIndicatorType" format="enum">
             <enum name="dot" value="0" />
             <enum name="spring" value="1" />
@@ -111,6 +112,7 @@
         <attr name="stepDrawableSize" format="reference" />
         <attr name="stepDrawableColor" format="color" />
         <attr name="stepDialogTitle" format="string" />
+        <attr name="stepBackgroundColor" format="color" />
         <attr name="stepValue" format="integer" />
         <attr name="stepMaxValue" format="integer" />
         <attr name="stepMinValue" format="integer" />

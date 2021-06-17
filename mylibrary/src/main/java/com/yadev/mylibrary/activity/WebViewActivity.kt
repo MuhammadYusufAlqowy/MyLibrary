@@ -1,16 +1,17 @@
 package com.yadev.mylibrary.activity
 
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.yadev.mylibrary.R
 import com.yadev.mylibrary.databinding.ActivityWebViewBinding
-import kotlinx.coroutines.*
+import com.yadev.mylibrary.getColorRes
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var layout: ActivityWebViewBinding
@@ -21,29 +22,17 @@ class WebViewActivity : AppCompatActivity() {
         setContentView(layout.root)
         val title = intent.getStringExtra("title") ?: getString(R.string.app_name)
         val url = intent.getStringExtra("url") ?: getString(R.string.app_name)
-        val icon = intent.getIntExtra("icon", R.drawable.ic_baseline_arrow_back_24)
+        val icon = intent.getIntExtra("icon", R.drawable.ic_arrow_back)
         val backgroundColor = intent.getIntExtra("backgroundColor", R.color.white)
-        val titleColor = intent.getIntExtra("titleColor", R.color.primary)
+        val titleColor = intent.getIntExtra("titleColor", R.color.text_color)
+        window?.statusBarColor = getColorRes(R.color.primary)
 
         layout.apply {
-            toolbar?.title = title
-            toolbar.navigationIcon = ContextCompat.getDrawable(this@WebViewActivity,icon)
+            btnBack.setOnClickListener { onBackPressed() }
+            btnBack.setImageResource(icon)
+            tvTitle.text = title
+            tvTitle.setTextColor(titleColor)
             toolbar.setBackgroundResource(backgroundColor)
-            toolbar.setTitleTextColor(ContextCompat.getColor(this@WebViewActivity,titleColor))
-            toolbar?.setNavigationOnClickListener { onBackPressed() }
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                webView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                    if (scrollY > oldScrollY){
-                        toolbar.postOnAnimationDelayed({
-                            toolbar.visibility = View.GONE
-                        },500)
-                    }else if (scrollY < oldScrollY){
-                        toolbar.postOnAnimationDelayed({
-                            toolbar.visibility = View.VISIBLE
-                        },500)
-                    }
-                }
-            }*/
             webView.apply {
                 settings.loadsImagesAutomatically = true
                 settings.javaScriptEnabled = true
@@ -69,12 +58,12 @@ class WebViewActivity : AppCompatActivity() {
                     }
 
                     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                        swipe?.isRefreshing = true
+                        swipe.isRefreshing = true
                         super.onPageStarted(view, url, favicon)
                     }
 
                     override fun onPageFinished(view: WebView?, url: String?) {
-                        swipe?.isRefreshing = false
+                        swipe.isRefreshing = false
                         super.onPageFinished(view, url)
                     }
 
@@ -83,14 +72,14 @@ class WebViewActivity : AppCompatActivity() {
                         request: WebResourceRequest?,
                         error: WebResourceError?
                     ) {
-                        swipe?.isRefreshing = false
+                        swipe.isRefreshing = false
                         super.onReceivedError(view, request, error)
                     }
                 }
 
                 loadUrl(url)
             }
-            swipe?.setOnRefreshListener {
+            swipe.setOnRefreshListener {
                 webView.loadUrl(url)
             }
             CoroutineScope(Main).launch {

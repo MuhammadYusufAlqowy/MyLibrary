@@ -10,7 +10,8 @@ const val GALLERY = 1
 const val CAMERA = 2
 const val DEFAULT = 0
 const val GONE = View.GONE
-const val VISIBLE = View.VISIBLE
+const val VISIBLE: Int = View.VISIBLE
+const val INVISIBLE = View.INVISIBLE
 const val VERTICAL = RecyclerView.VERTICAL
 const val HORIZONTAL = RecyclerView.HORIZONTAL
 

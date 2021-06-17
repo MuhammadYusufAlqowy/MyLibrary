@@ -490,7 +490,7 @@ fun TextInputLayout.getValueFormatRupiah() = this.editText?.text.toString().repl
 fun Context.openWebview(
     url: String,
     title: String? = getString(R.string.app_name),
-    @DrawableRes icon: Int? = R.drawable.ic_baseline_arrow_back_24,
+    @DrawableRes icon: Int? = R.drawable.ic_arrow_back,
     @ColorRes backGroundColor: Int? = R.color.white,
     @ColorRes titleColor: Int? = R.color.primary
 ) {

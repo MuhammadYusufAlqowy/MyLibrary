@@ -47,6 +47,10 @@ class MyStepper @JvmOverloads constructor(
                 R.styleable.MyStepper_stepValueColor,
                 context.getColorRes(R.color.text_color)
             )
+            val backgroundColor = attr.getColor(
+                R.styleable.MyStepper_stepBackgroundColor,
+                context.getColorRes(R.color.background)
+            )
             val valueSize = attr.getDimension(
                 R.styleable.MyStepper_stepValueSize,
                 resources.getDimension(R.dimen.t11)
