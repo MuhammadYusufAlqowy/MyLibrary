@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<V:ViewBinding> : Fragment(){
+abstract class BaseFragment<V:ViewBinding> : Fragment() {
     lateinit var layout: V
+    private val VISIBLE = View.VISIBLE
+    private val GONE = View.GONE
+    private val VERTICAL = RecyclerView.VERTICAL
+    private val HORIZONTAL = RecyclerView.HORIZONTAL
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -18,11 +23,5 @@ abstract class BaseFragment<V:ViewBinding> : Fragment(){
         return layout.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        onSetup()
-    }
-
-    abstract fun onSetup()
     abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): V
 }

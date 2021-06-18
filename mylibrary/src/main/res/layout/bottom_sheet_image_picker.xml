@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/m4">
 
             <TextView
@@ -35,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/m8"
                 android:layout_marginBottom="@dimen/m8"
-                android:gravity="center"
                 android:text="Pilih Foto"
                 android:textColor="@color/primary"
                 android:textSize="@dimen/t12"
@@ -45,6 +45,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@color/gray"/>
 
         <LinearLayout

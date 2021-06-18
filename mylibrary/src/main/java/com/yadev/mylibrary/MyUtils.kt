@@ -154,7 +154,7 @@ fun checkInput(input: Any): Boolean {
             check = false
             input.error = "${input.hint ?: ""} tidak boleh kosong!"
             input.requestFocus()
-//            Snackbar.make(input.rootView,"${input.hint} tidak boleh kosong!",Snackbar.LENGTH_SHORT).show()
+//            Snackbar.Build(input.rootView,"${input.hint} tidak boleh kosong!",Snackbar.LENGTH_SHORT).show()
         } else {
             check = true
             input.isErrorEnabled = false
@@ -492,7 +492,7 @@ fun Context.openWebview(
     title: String? = getString(R.string.app_name),
     @DrawableRes icon: Int? = R.drawable.ic_arrow_back,
     @ColorRes backGroundColor: Int? = R.color.white,
-    @ColorRes titleColor: Int? = R.color.primary
+    @ColorRes titleColor: Int? = R.color.text_color
 ) {
     val intent = Intent(this, WebViewActivity::class.java)
     intent.putExtra("title", title)
@@ -611,26 +611,26 @@ fun Activity.makeStatusBarTransparent() {
     }
 }
 
-fun View.snackSucces(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this, title = "Success", message = msg, anchorView = anchorView)
+fun View.snackSucces(msg: String, anchorView: View? = null): MySnackbar.Build {
+    val snack = MySnackbar.Build(this, title = "Success", message = msg, anchorView = anchorView)
     snack.showSuccess()
     return snack
 }
 
-fun View.snackError(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this, title = "Error", message = msg, anchorView = anchorView)
+fun View.snackError(msg: String, anchorView: View? = null): MySnackbar.Build {
+    val snack = MySnackbar.Build(this, title = "Error", message = msg, anchorView = anchorView)
     snack.showError()
     return snack
 }
 
-fun View.snackWarning(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this, title = "Warning", message = msg, anchorView = anchorView)
+fun View.snackWarning(msg: String, anchorView: View? = null): MySnackbar.Build {
+    val snack = MySnackbar.Build(this, title = "Warning", message = msg, anchorView = anchorView)
     snack.showWarning()
     return snack
 }
 
-fun View.snackInfo(msg: String, anchorView: View? = null): MySnackbar.make {
-    val snack = MySnackbar.make(this, title = "Info", message = msg, anchorView = anchorView)
+fun View.snackInfo(msg: String, anchorView: View? = null): MySnackbar.Build {
+    val snack = MySnackbar.Build(this, title = "Info", message = msg, anchorView = anchorView)
     snack.showInfo()
     return snack
 }
@@ -649,7 +649,6 @@ fun ImageView.setImageUrl(
     type: MyBitmapTransformation = MyBitmapTransformation.FIT_CENTER,
     roundedCorner: Int = 1,
     cacheStrategy: MyDiskCacheStrategy = MyDiskCacheStrategy.ALL,
-//    @DrawableRes errorDrawable: Int = R.drawable.ic_error_cloud
 ) {
     var bitmapTransformation: BitmapTransformation = when (type) {
         is MyBitmapTransformation.FIT_CENTER -> FitCenter()
@@ -672,7 +671,6 @@ fun ImageView.setImageUrl(
                 .diskCacheStrategy(diskCacheStrategy)
                 .signature(ObjectKey(key!!))
         ).placeholder(circularProgressDrawable)
-//        .error(errorDrawable)
         .into(this)
 }
 
@@ -682,7 +680,6 @@ fun ImageView.setImageBase64(
     type: BitmapTransformation,
     roundedCorner: Int = 0,
     cacheStrategy: DiskCacheStrategy = DiskCacheStrategy.ALL,
-//    @DrawableRes errorDrawable: Int
 ) {
     val circularProgressDrawable = CircularProgressDrawable(this.context)
     circularProgressDrawable.strokeWidth = 4f
@@ -695,7 +692,6 @@ fun ImageView.setImageBase64(
                 .signature(ObjectKey(key))
         )
         .placeholder(circularProgressDrawable)
-//        .error(errorDrawable)
         .into(this)
 }
 

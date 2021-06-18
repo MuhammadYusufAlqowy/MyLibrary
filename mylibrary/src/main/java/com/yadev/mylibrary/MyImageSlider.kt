@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.get
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     var indicatorPaddingTop: Int = 0
     var indicatorPaddingBottom: Int = 0
     var allowIntercept = false
-
 
     private lateinit var rclv: RecyclerView
 
@@ -119,9 +119,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             rclv = viewPager.getChildAt(0) as RecyclerView
             rclv.overScrollMode = OVER_SCROLL_NEVER
 
-
-
-
             if (!enableIndicator) {
                 lIndicator.visibility = GONE
             }
@@ -137,7 +134,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 2 -> lIndicator.gravity = Gravity.CENTER
                 3 -> lIndicator.gravity = Gravity.END
             }
-
 
             when (indicatorStyle) {
                 0 -> {
@@ -168,9 +164,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                     sliderMinHeight + indicatorPaddingBottom + indicatorPaddingTop
                 )
             }
-
-
-
             attr.recycle()
         }
     }
@@ -184,6 +177,7 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                 clipToPadding = false
                 clipChildren = false
                 offscreenPageLimit = 3
+                updatePagerHeightForChild(viewPager.get(0), viewPager, sliderMinHeight)
                 if (adapter.itemCount > 1) {
                     adapter.pageOffset = pageOffset
                     adapter.pageMargin = pageMargin
@@ -215,7 +209,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                                 page.translationY = offset
                             }
                         }
-
                     }
 
                     if (isAutoScroll) {
@@ -242,7 +235,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                     springIndicator.setViewPager2(viewPager)
                 }
             }
-
         }
         return adapter
     }
@@ -333,9 +325,6 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                     )
                 }
             }
-
         }
     }
-
 }
-

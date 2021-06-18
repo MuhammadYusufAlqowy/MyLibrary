@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/m8">
+    android:padding="@dimen/m16">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Input Number"
+        android:textAlignment="center"
         android:textSize="@dimen/t12"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,27 +40,28 @@
         style="@style/MyButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m4"
+        android:layout_marginStart="@dimen/m8"
         android:layout_marginTop="@dimen/m8"
-        android:layout_marginEnd="@dimen/m8"
+        android:insetBottom="0dp"
         android:text="Positive"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        app:backgroundTint="@color/colorButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnNegative"
         app:layout_constraintTop_toBottomOf="@+id/tilInputNumber"
-        app:backgroundTint="@color/colorButton" />
+        app:rippleColor="@color/colorRipple" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNegative"
         style="@style/MyButtonOutlineStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/m8"
         android:layout_marginTop="@dimen/m8"
-        android:layout_marginEnd="@dimen/m4"
+        android:layout_marginEnd="@dimen/m8"
+        android:insetBottom="0dp"
         android:text="Negative"
         android:textAllCaps="false"
         android:textColor="@color/colorButton"
@@ -68,5 +70,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilInputNumber"
+        app:rippleColor="@color/colorRipple"
         app:strokeColor="@color/colorButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

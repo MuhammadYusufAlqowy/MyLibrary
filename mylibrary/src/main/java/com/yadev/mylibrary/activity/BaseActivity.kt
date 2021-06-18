@@ -4,17 +4,22 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.yadev.mylibrary.R
 import com.yadev.mylibrary.hideSoftKeyboard
 import com.yadev.mylibrary.makeStatusBarTransparent
 
-abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean) : AppCompatActivity(){
-    lateinit var layout : V
+abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean) : AppCompatActivity() {
+    lateinit var layout: V
     private var dispatch = false
     private var fontScale = false
-    abstract fun onSetup()
+    private val VISIBLE = View.VISIBLE
+    private val GONE = View.GONE
+    private val VERTICAL = RecyclerView.VERTICAL
+    private val HORIZONTAL = RecyclerView.HORIZONTAL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (fullScreen) {
@@ -23,9 +28,9 @@ abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean) : AppCompat
         }
         layout = getBindingView()
         setContentView(layout.root)
-        onSetup()
     }
-    abstract fun getBindingView() : V
+
+    abstract fun getBindingView(): V
 
     fun enableDispatch(status: Boolean) {
         dispatch = status

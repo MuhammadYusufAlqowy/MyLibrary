@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#FF6200EE</color>
     <color name="colorButton">@color/primary</color>
+    <color name="colorRipple">#1A000000</color>
     <color name="transparent">#00000000</color>
     <color name="text_color">#555252</color>
     <color name="background">#F3F8FE</color>
@@ -18,6 +19,7 @@
     <color name="warning">#FFA900</color>
     <color name="success">#4CAF50</color>
     <color name="info">#3F51B5</color>
-    <color name="disable">#EDF1F7</color>
+    <color name="loader_default">#E0E0E0</color>
+    <color name="loader_dark">#BCBCBC</color>
 
 </resources>

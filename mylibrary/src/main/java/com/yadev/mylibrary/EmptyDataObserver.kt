@@ -10,10 +10,14 @@ class EmptyDataObserver(val rclv: RecyclerView, val emptyView: View?) :
     }
 
     private fun checkIfEmpty() {
-        if (emptyView != null && rclv.adapter != null) {
-            val emptyViewVisible = rclv.adapter!!.itemCount == 0
-            emptyView.visibility = if (emptyViewVisible) View.VISIBLE else View.GONE
-            rclv.visibility = if (emptyViewVisible) View.GONE else View.VISIBLE
+        if (emptyView != null) {
+            if (rclv.adapter != null) {
+                val emptyViewVisible = rclv.adapter!!.itemCount == 0
+                emptyView.visibility = if (emptyViewVisible) View.VISIBLE else View.GONE
+                rclv.visibility = if (emptyViewVisible) View.GONE else View.VISIBLE
+            } else {
+                emptyView.visibility = View.VISIBLE
+            }
         }
     }
 

@@ -50,6 +50,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:minWidth="@dimen/_24adp"
+                android:layout_marginStart="@dimen/_1adp"
+                android:layout_marginEnd="@dimen/_1adp"
                 android:text="1"
                 android:singleLine="true"
                 android:textSize="@dimen/t11"

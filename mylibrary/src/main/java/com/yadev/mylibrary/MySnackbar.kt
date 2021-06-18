@@ -10,7 +10,7 @@ import com.yadev.mylibrary.databinding.LayoutCustomSnackbarBinding
 class MySnackbar {
 
     @SuppressLint("ShowToast")
-    class make(
+    class Build(
         view: View,
         title: String? = null,
         message: String,
@@ -39,7 +39,7 @@ class MySnackbar {
             }
         }
 
-        fun showInfo(): make {
+        fun showInfo(): Build {
             myLayout.apply {
                 imgIcon.setImageResource(R.drawable.ic_info)
                 rootLayout.setCardBackgroundColor(root.context.getColorRes(R.color.info))
@@ -49,7 +49,7 @@ class MySnackbar {
             return this
         }
 
-        fun showSuccess(): make {
+        fun showSuccess(): Build {
             myLayout.apply {
                 imgIcon.setImageResource(R.drawable.ic_ok)
                 rootLayout.setCardBackgroundColor(root.context.getColorRes(R.color.success))
@@ -58,7 +58,7 @@ class MySnackbar {
             return this
         }
 
-        fun showError(): make {
+        fun showError(): Build {
             myLayout.apply {
                 imgIcon.setImageResource(R.drawable.ic_cancel)
                 rootLayout.setCardBackgroundColor(root.context.getColorRes(R.color.error))
@@ -67,7 +67,7 @@ class MySnackbar {
             return this
         }
 
-        fun showWarning(): make {
+        fun showWarning(): Build {
             myLayout.apply {
                 imgIcon.setImageResource(R.drawable.ic_warning)
                 rootLayout.setCardBackgroundColor(root.context.getColorRes(R.color.warning))
@@ -76,24 +76,24 @@ class MySnackbar {
             return this
         }
 
-        fun show(): make {
+        fun show(): Build {
             snackbar.show()
             return this
         }
 
-        fun dismiss(): make {
+        fun dismiss(): Build {
             if (snackbar.isShown) {
                 snackbar.dismiss()
             }
             return this
         }
 
-        fun setCancelable(duration: Int): make {
+        fun setCancelable(duration: Int): Build {
             snackbar.duration = duration
             return this
         }
 
-        fun setAction(action: String, listener: View.OnClickListener): make {
+        fun setAction(action: String, listener: View.OnClickListener): Build {
             myLayout.apply {
                 btnAction.visibility = View.VISIBLE
                 btnAction.text = action

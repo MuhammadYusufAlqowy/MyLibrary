@@ -19,8 +19,8 @@ class MyStepper @JvmOverloads constructor(
     var max = 0
     var min = 0
     var increment = 1
-    var value = 0
-    val valueLiveData = MutableLiveData<Int>()
+    private var value = 0
+    private val valueLiveData = MutableLiveData<Int>()
     val input = LayoutInputBinding.inflate(LayoutInflater.from(context))
     val dialog = MyDialog.BuildCustomLayout(context, input)
     private val lifecycleRegistry = LifecycleRegistry(this)
@@ -125,6 +125,15 @@ class MyStepper @JvmOverloads constructor(
             }
 
             attr.recycle()
+        }
+    }
+
+    fun setValue(value: Int, isTrigger: Boolean = true) {
+        this.value = value
+        if (isTrigger) {
+            valueLiveData.postValue(value)
+        } else {
+            layout.tvValue.text = value.toString()
         }
     }
 

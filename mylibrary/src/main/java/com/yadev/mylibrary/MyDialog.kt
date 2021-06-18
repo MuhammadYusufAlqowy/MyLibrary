@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.annotation.DrawableRes
@@ -78,6 +80,8 @@ class MyDialog {
                 tvTitle.text = title
                 tvMessage.text = message
                 imgIcon.setImageResource(image ?: 0)
+                btnNegative.visibility = GONE
+                btnPositive.visibility = GONE
             }
         }
 
@@ -88,6 +92,7 @@ class MyDialog {
 
         fun addOnNegativeButton(button: String, listener: View.OnClickListener): Build {
             layout.apply {
+                btnNegative.visibility = VISIBLE
                 btnNegative.text = button
                 btnNegative.setOnClickListener {
                     if (dialog.isShowing) {
@@ -101,6 +106,7 @@ class MyDialog {
 
         fun addOnPositiveButton(button: String, listener: View.OnClickListener): Build {
             layout.apply {
+                btnPositive.visibility = VISIBLE
                 btnPositive.text = button
                 btnPositive.setOnClickListener {
                     if (dialog.isShowing) {

@@ -10,7 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yadev.mylibrary.databinding.LayoutLoadingBinding
 
 class MyLoading {
-    class create(context: Context, @RawRes lottieAnim: Int = R.raw.loading) {
+    class Build(context: Context, @RawRes lottieAnim: Int = R.raw.loading) {
         private val loading = MaterialAlertDialogBuilder(context).create()
         val layout = LayoutLoadingBinding.inflate(LayoutInflater.from(context))
 
@@ -26,12 +26,17 @@ class MyLoading {
             }
         }
 
-        fun show(): create {
+        fun show(): Build {
             loading.show()
             return this
         }
 
-        fun dismiss(): create {
+        fun setCancelable(boolean: Boolean): Build {
+            loading.setCancelable(boolean)
+            return this
+        }
+
+        fun dismiss(): Build {
             loading.dismiss()
             return this
         }

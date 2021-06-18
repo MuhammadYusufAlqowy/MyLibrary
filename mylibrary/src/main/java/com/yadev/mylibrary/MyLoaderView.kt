@@ -25,7 +25,7 @@ object LoaderConstant {
     val COLOR_DEFAULT_GRADIENT = Color.rgb(245, 245, 245)
     const val MIN_WEIGHT = 0.0f
     const val MAX_WEIGHT = 1.0f
-    const val CORNER_DEFAULT = 25
+    const val CORNER_DEFAULT = 10
     const val USE_GRADIENT_DEFAULT = false
 }
 
@@ -192,7 +192,7 @@ class MyImageView : AppCompatImageView, LoaderView {
         )
         defaultColorResource = typedArray.getColor(
             R.styleable.MyImageView_miv_backgroundColor, ContextCompat.getColor(
-                context, R.color.default_color
+                context, R.color.loader_default
             )
         )
         typedArray.recycle()
@@ -300,12 +300,12 @@ class MyTextView : AppCompatTextView, LoaderView {
         )
         defaultColorResource = typedArray.getColor(
             R.styleable.MyTextView_mtv_backgroundColor, ContextCompat.getColor(
-                context, R.color.default_color
+                context, R.color.loader_default
             )
         )
         darkerColorResource = typedArray.getColor(
             R.styleable.MyTextView_mtv_backgroundColor, ContextCompat.getColor(
-                context, R.color.default_color
+                context, R.color.loader_dark
             )
         )
         typedArray.recycle()

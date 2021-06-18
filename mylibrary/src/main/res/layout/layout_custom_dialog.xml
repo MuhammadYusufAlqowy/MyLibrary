@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/rootLayout"
         android:layout_width="match_parent"
@@ -20,13 +21,13 @@
             android:id="@+id/baseLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/m8">
+            android:layout_margin="@dimen/m16">
 
             <ImageView
                 android:id="@+id/imgIcon"
-                android:visibility="gone"
                 android:layout_width="@dimen/_116adp"
                 android:layout_height="@dimen/_116adp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Title"
-                android:layout_margin="@dimen/m8"
+                android:textAlignment="center"
                 android:textSize="@dimen/t12"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,49 +48,50 @@
                 android:id="@+id/tvMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Message"
-                android:layout_margin="@dimen/m8"
+                android:textAlignment="center"
                 android:textSize="@dimen/t11"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPositive"
+                style="@style/MyButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m8"
+                android:insetBottom="0dp"
                 android:text="Positive"
-                style="@style/MyButtonStyle"
-                app:strokeColor="@color/info"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:layout_marginStart="@dimen/m4"
-                android:layout_marginTop="@dimen/m8"
-                android:layout_marginEnd="@dimen/m8"
                 app:backgroundTint="@color/colorButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btnNegative"
-                app:layout_constraintTop_toBottomOf="@id/tvMessage" />
+                app:layout_constraintTop_toBottomOf="@id/tvMessage"
+                app:rippleColor="@color/colorRipple" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNegative"
+                style="@style/MyButtonOutlineStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                style="@style/MyButtonOutlineStyle"
-                android:layout_marginStart="@dimen/m8"
                 android:layout_marginTop="@dimen/m8"
-                android:layout_marginEnd="@dimen/m4"
+                android:insetBottom="0dp"
                 android:text="Negative"
+                android:textAllCaps="false"
                 android:textColor="@color/colorButton"
-                app:strokeColor="@color/colorButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnPositive"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvMessage" />
+                app:layout_constraintTop_toBottomOf="@id/tvMessage"
+                app:rippleColor="@color/colorRipple"
+                app:strokeColor="@color/colorButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
