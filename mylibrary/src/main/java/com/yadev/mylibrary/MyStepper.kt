@@ -19,7 +19,7 @@ class MyStepper @JvmOverloads constructor(
     var max = 0
     var min = 0
     var increment = 1
-    private var value = 0
+    var value = 0
     private val valueLiveData = MutableLiveData<Int>()
     val input = LayoutInputBinding.inflate(LayoutInflater.from(context))
     val dialog = MyDialog.BuildCustomLayout(context, input)
