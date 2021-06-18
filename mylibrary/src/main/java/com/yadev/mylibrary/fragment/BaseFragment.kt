@@ -10,10 +10,10 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<V:ViewBinding> : Fragment() {
     lateinit var layout: V
-    private val VISIBLE = View.VISIBLE
-    private val GONE = View.GONE
-    private val VERTICAL = RecyclerView.VERTICAL
-    private val HORIZONTAL = RecyclerView.HORIZONTAL
+    val VISIBLE = View.VISIBLE
+    val GONE = View.GONE
+    val VERTICAL = RecyclerView.VERTICAL
+    val HORIZONTAL = RecyclerView.HORIZONTAL
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

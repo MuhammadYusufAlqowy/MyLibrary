@@ -16,10 +16,10 @@ abstract class BaseActivity<V: ViewBinding>(val fullScreen: Boolean) : AppCompat
     lateinit var layout: V
     private var dispatch = false
     private var fontScale = false
-    private val VISIBLE = View.VISIBLE
-    private val GONE = View.GONE
-    private val VERTICAL = RecyclerView.VERTICAL
-    private val HORIZONTAL = RecyclerView.HORIZONTAL
+    val VISIBLE = View.VISIBLE
+    val GONE = View.GONE
+    val VERTICAL = RecyclerView.VERTICAL
+    val HORIZONTAL = RecyclerView.HORIZONTAL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (fullScreen) {
