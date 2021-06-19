@@ -38,21 +38,7 @@ abstract class BaseRecyclerViewAdapter<T, V : ViewBinding>(var listItem: Mutable
         return listItem
     }
 
-    fun replaceItem(newItem: T, position: Int) {
-        if (listItem.size - 1 > position) {
-            listItem[position] = newItem
-            notifyItemChanged(position)
-        }
-    }
-
-    fun deleteItem(position: Int) {
-        if (listItem.size - 1 > position) {
-            listItem.removeAt(position)
-            notifyItemRemoved(position)
-        }
-    }
-
-    fun OnItemSelectedListener(listener: ((T, Int) -> Unit)) {
+    fun OnItemSelectedListener(listener: ((T, Int) -> Unit)? = null) {
         OnItemSelectedListener = listener
     }
 
