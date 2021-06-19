@@ -27,7 +27,6 @@
                 android:id="@+id/imgIcon"
                 android:layout_width="@dimen/_116adp"
                 android:layout_height="@dimen/_116adp"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
