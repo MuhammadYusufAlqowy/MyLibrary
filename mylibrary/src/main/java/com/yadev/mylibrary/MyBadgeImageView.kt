@@ -61,7 +61,7 @@ class MyBadgeImageView(context: Context, attrs: AttributeSet) : FrameLayout(cont
             layout.tvBadge.text = "99+"
         }
         if (number == 0){
-            layout.tvBadge.visibility = View.GONE
+            layout.tvBadge.visibility = View.INVISIBLE
         }else{
             layout.tvBadge.visibility = View.VISIBLE
         }

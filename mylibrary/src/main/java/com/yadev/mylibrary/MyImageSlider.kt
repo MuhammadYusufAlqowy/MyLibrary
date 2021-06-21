@@ -327,4 +327,11 @@ class MyImageSlider(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             }
         }
     }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(
+            widthMeasureSpec,
+            sliderMinHeight + indicatorPaddingBottom + indicatorPaddingTop
+        )
+    }
 }

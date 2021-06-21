@@ -4,13 +4,18 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RawRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yadev.mylibrary.databinding.LayoutLoadingBinding
 
 class MyLoading {
-    class Build(context: Context, @RawRes lottieAnim: Int = R.raw.loading) {
+    class Build(
+        context: Context,
+        @RawRes lottieAnim: Int = R.raw.loading,
+        message: String? = null
+    ) {
         private val loading = MaterialAlertDialogBuilder(context).create()
         val layout = LayoutLoadingBinding.inflate(LayoutInflater.from(context))
 
@@ -23,6 +28,10 @@ class MyLoading {
             loading.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             layout.apply {
                 this.lottieAnim.setAnimation(lottieAnim)
+                if (!message.isNullOrEmpty()) {
+                    tvMessage.visibility = View.VISIBLE
+                    tvMessage.text = message
+                }
             }
         }
 

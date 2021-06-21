@@ -42,7 +42,7 @@ class MyStepper @JvmOverloads constructor(
             val drawableColor = attr.getColorStateList(R.styleable.MyStepper_stepDrawableColor)
                 ?: ContextCompat.getColorStateList(context, R.color.color_button)
             value = attr.getInteger(R.styleable.MyStepper_stepValue, min)
-            valueLiveData.postValue(value)
+//            valueLiveData.postValue(value)
             increment = attr.getInteger(R.styleable.MyStepper_stepValueIncrement, 1)
             val valueColor = attr.getColor(
                 R.styleable.MyStepper_stepValueColor,
