@@ -3,6 +3,8 @@ package com.yadev.mylibrary
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -45,10 +47,13 @@ class MyDialog {
             return this
         }
 
-        fun dismiss(): BuildCustomLayout {
-            dialog.dismiss()
+        fun dismiss(delay: Long): BuildCustomLayout {
+            Handler(Looper.getMainLooper()).postDelayed({
+                dialog.dismiss()
+            }, delay)
             return this
         }
+
     }
 
     class Build(

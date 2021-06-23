@@ -11,7 +11,7 @@
     <color name="colorButton">@color/primary</color>
     <color name="colorRipple">#1A000000</color>
     <color name="transparent">#00000000</color>
-    <color name="text_color">#555252</color>
+    <color name="text_color">#1E272E</color>
     <color name="background">#F3F8FE</color>
     <color name="placeholder">#E0E0E0</color>
     <color name="gray">#BCBCBC</color>

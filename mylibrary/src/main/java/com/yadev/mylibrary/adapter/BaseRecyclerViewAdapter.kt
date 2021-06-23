@@ -9,8 +9,9 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseRecyclerViewAdapter<T, V : ViewBinding>(var listItem: MutableList<T>) :
     RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    private var saveList = listItem
-    private var OnItemSelectedListener: ((T, Int) -> Unit)? = null
+
+    private var filterList = listItem
+    private var onItemSelectedListener: ((T, Int) -> Unit)? = null
     private var recyclerView: RecyclerView? = null
     lateinit var layout: V
     abstract fun setViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup): V
@@ -22,8 +23,8 @@ abstract class BaseRecyclerViewAdapter<T, V : ViewBinding>(var listItem: Mutable
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         bind(listItem[position], layout, holder.adapterPosition)
-        holder.itemView.setOnClickListener {
-            OnItemSelectedListener?.let {
+        onItemSelectedListener?.let {
+            holder.itemView.setOnClickListener { v ->
                 it(listItem[holder.adapterPosition], holder.adapterPosition)
             }
         }
@@ -31,20 +32,18 @@ abstract class BaseRecyclerViewAdapter<T, V : ViewBinding>(var listItem: Mutable
 
     override fun getItemCount() = listItem.size
 
-    fun searchItem(predicate: (T) -> Boolean): MutableList<T> {
-        val search = saveList.filter(predicate)
+    fun searchItem(predicate: (T) -> Boolean) {
+        val search = filterList.filter(predicate)
         listItem = search as MutableList<T>
         notifyDataSetChanged()
-        return listItem
     }
 
-    fun OnItemSelectedListener(listener: ((T, Int) -> Unit)? = null) {
-        OnItemSelectedListener = listener
+    fun onItemSelectedListener(listener: ((T, Int) -> Unit)? = null) {
+        onItemSelectedListener = listener
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
     }
-
 }

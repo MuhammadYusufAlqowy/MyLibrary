@@ -249,10 +249,69 @@ fun checkInputPassword(input: Any): Boolean {
 }
 
 
+fun Activity.pickImage(
+    cropSquare: Boolean = true,
+    compress: Int = 512,
+    pickType: Int = DEFAULT,
+    result: (Uri?) -> Unit
+) {
+    Dexter.withContext(this)
+        .withPermissions(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        .withListener(object : MultiplePermissionsListener {
+            override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                if (p0?.areAllPermissionsGranted()!!) {
+                    val imagePicker = ImagePicker.with(this@pickImage)
+                        .saveDir(File(externalCacheDir, "ImagePicker"))
+                        .maxResultSize(1080, 1080)
+                        .compress(compress)
+                    when (pickType) {
+                        1 -> imagePicker.galleryOnly()
+                        2 -> imagePicker.cameraOnly()
+                    }
+                    if (cropSquare) {
+                        imagePicker.cropSquare()
+                    } else {
+                        imagePicker.crop()
+                    }
+                    imagePicker.start { resultCode, data ->
+                        if (resultCode == Activity.RESULT_OK) {
+                            result(data?.data)
+                        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                            Toast.makeText(
+                                this@pickImage,
+                                ImagePicker.getError(data),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+
+            override fun onPermissionRationaleShouldBeShown(
+                p0: MutableList<PermissionRequest>?,
+                p1: PermissionToken?
+            ) {
+                p1?.continuePermissionRequest()
+            }
+
+        }).check()
+}
+
+
 /**
  * Mengambil gambar dari gallery atau kamera
  */
-fun pickImage(activity: Activity, imageView: ImageView, cropSquare: Boolean = true, compress:Int = 512, pickType:Int = DEFAULT, title: String = "Pilih Foto") {
+fun pickImage(
+    activity: Activity,
+    imageView: ImageView,
+    cropSquare: Boolean = true,
+    compress: Int = 512,
+    pickType: Int = DEFAULT,
+    title: String = "Pilih Foto"
+) {
     Dexter.withContext(activity)
         .withPermissions(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -530,8 +589,8 @@ fun getDirSize(dir: File): Long {
     return size
 }
 
-fun ImageViewToByteArray(imageView: ImageView): ByteArray {
-    val bitmap = imageView.drawable.toBitmap()
+fun ImageView.toByteArray(): ByteArray {
+    val bitmap = this.drawable.toBitmap()
     val stream = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
     return stream.toByteArray()
