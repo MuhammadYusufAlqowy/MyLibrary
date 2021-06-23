@@ -3,6 +3,8 @@ package com.yadev.mylibrary
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -45,8 +47,10 @@ class MyLoading {
             return this
         }
 
-        fun dismiss(): Build {
-            loading.dismiss()
+        fun dismiss(delay: Long = 0L): Build {
+            Handler(Looper.getMainLooper()).postDelayed({
+                loading.dismiss()
+            }, delay)
             return this
         }
     }
