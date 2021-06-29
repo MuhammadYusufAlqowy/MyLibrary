@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/m16"
                     android:textStyle="bold"
+                    android:textSize="@dimen/t12"
                     android:layout_marginEnd="@dimen/m8"
                     android:ellipsize="end"
                     android:singleLine="true"
