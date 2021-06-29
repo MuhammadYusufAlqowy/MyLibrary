@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.yadev.mylibrary">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -8,21 +7,19 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:theme="@style/Theme.MyCustomLibrary"
         android:usesCleartextTraffic="true">
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".myimagepicker.ImagePickerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

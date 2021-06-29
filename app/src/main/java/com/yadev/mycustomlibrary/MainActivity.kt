@@ -3,7 +3,7 @@ package com.yadev.mycustomlibrary
 import android.os.Bundle
 import com.yadev.mycustomlibrary.databinding.ActivityMainBinding
 import com.yadev.mylibrary.activity.BaseActivity
-import com.yadev.mylibrary.pickImage
+import com.yadev.mylibrary.openWebview
 import com.yadev.mylibrary.snackError
 
 
@@ -18,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(false) {
             }
             slider.setAdapter(adaptertes())
             btnAction.setOnClickListener {
-                pickImage(this@MainActivity, img)
+                openWebview("https://google.com")
             }
             badge.setBadgeNumber(10)
 

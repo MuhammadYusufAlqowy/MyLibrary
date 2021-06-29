@@ -60,7 +60,6 @@ class MyDialog {
     ) {
         private var dialog = MaterialAlertDialogBuilder(context).create()
         var layout = LayoutCustomDialogBinding.inflate(LayoutInflater.from(context))
-
         init {
             dialog.setView(layout.root)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

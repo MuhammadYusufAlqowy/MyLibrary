@@ -25,13 +25,13 @@ class WebViewActivity : AppCompatActivity() {
         val icon = intent.getIntExtra("icon", R.drawable.ic_arrow_back)
         val backgroundColor = intent.getIntExtra("backgroundColor", R.color.white)
         val titleColor = intent.getIntExtra("titleColor", R.color.text_color)
-        window?.statusBarColor = getColorRes(R.color.primary)
+//        window?.statusBarColor = getColorRes(R.color.primary)
 
         layout.apply {
             btnBack.setOnClickListener { onBackPressed() }
             btnBack.setImageResource(icon)
             tvTitle.text = title
-            tvTitle.setTextColor(titleColor)
+            tvTitle.setTextColor(getColorRes(titleColor))
             toolbar.setBackgroundResource(backgroundColor)
             webView.apply {
                 settings.loadsImagesAutomatically = true
