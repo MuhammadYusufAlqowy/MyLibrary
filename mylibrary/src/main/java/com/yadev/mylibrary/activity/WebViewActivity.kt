@@ -1,6 +1,8 @@
 package com.yadev.mylibrary.activity
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.*
@@ -52,6 +54,10 @@ class WebViewActivity : AppCompatActivity() {
                         request: WebResourceRequest?
                     ): Boolean {
                         val url = request?.url.toString()
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        startActivity(intent)
+                        /*val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        startActivity(intent)*/
                         view?.loadUrl(url)
                         return super.shouldOverrideUrlLoading(view, request)
 
