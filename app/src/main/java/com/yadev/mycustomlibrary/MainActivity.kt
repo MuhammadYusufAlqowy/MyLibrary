@@ -18,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(false) {
             }
             slider.setAdapter(adaptertes())
             btnAction.setOnClickListener {
-                openWebview("https://google.com")
+                openWebview("https://instagram.com/yusufalqowy")
             }
             badge.setBadgeNumber(10)
 

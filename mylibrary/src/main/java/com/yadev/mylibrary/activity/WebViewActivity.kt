@@ -2,6 +2,7 @@ package com.yadev.mylibrary.activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.MailTo
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -54,13 +55,52 @@ class WebViewActivity : AppCompatActivity() {
                         request: WebResourceRequest?
                     ): Boolean {
                         val url = request?.url.toString()
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        startActivity(intent)
-                        /*val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        startActivity(intent)*/
-                        view?.loadUrl(url)
-                        return super.shouldOverrideUrlLoading(view, request)
-
+                        /*val url = request?.url.toString()
+                        Log.wtf("URLLL",Uri.parse(url).scheme)
+                        if (Uri.parse(url).scheme!!.contains("market",true)||Uri.parse(url).scheme!!.contains("whatsapp",true)||Uri.parse(url).scheme!!.contains("facebook",true)||Uri.parse(url).scheme!!.contains("intent",true)){
+                            try {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                startActivity(intent)
+                            }catch (e:Throwable){}
+                            return false
+                        }else{
+                            view?.loadUrl(url)
+                            return true
+                        }*/
+                        return if (url.endsWith(".mp4")) {
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.setDataAndType(Uri.parse(url), "video/*")
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent) // If we return true, onPageStarted, onPageFinished won't be called.
+                            true
+                        } else if (url.startsWith("tel:") || url.startsWith("sms:") || url.startsWith(
+                                "smsto:"
+                            ) || url.startsWith("mms:") || url.startsWith("mmsto:")
+                        ) {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                            true // If we return true, onPageStarted, onPageFinished won't be called.
+                        } else if (url.startsWith("mailto:")) {
+                            val mt = MailTo.parse(url)
+                            val emailIntent = Intent(Intent.ACTION_SEND)
+                            emailIntent.type = "text/html"
+                            emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(mt.to))
+                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, mt.subject)
+                            emailIntent.putExtra(Intent.EXTRA_CC, mt.cc)
+                            emailIntent.putExtra(Intent.EXTRA_TEXT, mt.body)
+                            startActivity(emailIntent)
+                            true
+                        } else if (Uri.parse(url).scheme!!.contains("whatsapp", true) || Uri.parse(
+                                url
+                            ).scheme!!.contains("market", true)
+                        ) {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            startActivity(intent)
+                            true
+                        } else {
+                            super.shouldOverrideUrlLoading(view, url)
+                        }
                     }
 
                     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
